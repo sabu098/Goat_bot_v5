@@ -1,88 +1,133 @@
 module.exports = {
   config: {
-    name: "slot",
-    version: "2.1",
-    author: "Arijit",
-    countDown: 15,
-    shortDescription: {
-      en: "slot game 🙂",
-    },
-    longDescription: {
-      en: "Try your luck in a slot game",
-    },
+    name: "slots",
+    aliases: ["slot", "spin"],
+    version: "1.3",
+    author: "xnil6x",
+    countDown: 3,
+    role: 0,
+    description: "🎰 Ultra-stylish slot machine with balanced odds",
     category: "game",
+    guide: {
+      en: "Use: {pn} [bet amount]"
+    }
   },
 
-  langs: {
-    en: {
-      invalid_amount: "𝗣𝗹𝗲𝗮𝘀𝗲 𝗲𝗻𝘁𝗲𝗿 𝗮 𝘃𝗮𝗹𝗶𝗱 𝗮𝗺𝗼𝘂𝗻𝘁 😿💅",
-      not_enough_money: "𝗣𝗹𝗲𝗮𝘀𝗲 𝗰𝗵𝗲𝗰𝗸 𝘆𝗼𝘂𝗿 𝗯𝗮𝗹𝗮𝗻𝗰𝗲 🤡",
-      win_message: ">🎀\n• 𝐁𝐚𝐛𝐲, 𝐘𝐨𝐮 𝐰𝐨𝐧 $%1\n• 𝐆𝐚𝐦𝐞 𝐑𝐞𝐬𝐮𝐥𝐭𝐬 [ %2 | %3 | %4 ]",
-      lose_message: ">🎀\n• 𝐁𝐚𝐛𝐲, 𝐘𝐨𝐮 𝐥𝐨𝐬𝐭 $%1\n• 𝐆𝐚𝐦𝐞 𝐑𝐞𝐬𝐮𝐥𝐭𝐬 [ %2 | %3 | %4 ]",
-      jackpot_message: ">🎀\n𝐉𝐚𝐜𝐤𝐩𝐨𝐭! 𝐘𝐨𝐮 𝐰𝐨𝐧 $%1 𝐰𝐢𝐭𝐡 𝐭𝐡𝐫𝐞𝐞 %2 𝐬𝐲𝐦𝐛𝐨𝐥𝐬, 𝐁𝐚𝐛𝐲!\n• 𝐆𝐚𝐦𝐞 𝐑𝐞𝐬𝐮𝐥𝐭𝐬 [ %3 | %4 | %5 ]"
-    },
-  },
-
-  onStart: async function ({ args, message, event, usersData, getLang }) {
+  onStart: async function ({ message, event, args, usersData }) {
     const { senderID } = event;
-    const userData = await usersData.get(senderID);
-    const amount = parseInt(args[0]);
+    const bet = parseInt(args[0]);
 
-    if (isNaN(amount) || amount <= 0) {
-      return message.reply(getLang("invalid_amount"));
+    // Enhanced money formatting with colors
+    const formatMoney = (amount) => {
+      if (isNaN(amount)) return "💲0";
+      amount = Number(amount);
+      const scales = [
+        { value: 1e15, suffix: 'Q', color: '🌈' },  // Quadrillion
+        { value: 1e12, suffix: 'T', color: '✨' },  // Trillion
+        { value: 1e9, suffix: 'B', color: '💎' },  // Billion
+        { value: 1e6, suffix: 'M', color: '💰' },   // Million
+        { value: 1e3, suffix: 'k', color: '💵' }    // Thousand
+      ];
+      const scale = scales.find(s => amount >= s.value);
+      if (scale) {
+        const scaledValue = amount / scale.value;
+        return `${scale.color}${scaledValue.toFixed(2)}${scale.suffix}`;
+      }
+      return `💲${amount.toLocaleString()}`;
+    };
+
+    if (isNaN(bet) || bet <= 0) {
+      return message.reply("🔴 𝗘𝗥𝗥𝗢𝗥: Please enter a valid bet amount!");
     }
 
-    if (amount > userData.money) {
-      return message.reply(getLang("not_enough_money"));
+    const user = await usersData.get(senderID);
+    if (user.money < bet) {
+      return message.reply(`🔴 𝗜𝗡𝗦𝗨𝗙𝗙𝗜𝗖𝗜𝗘𝗡𝗧 𝗙𝗨𝗡𝗗𝗦: You need ${formatMoney(bet - user.money)} more to play!`);
     }
 
-    const slots = ["💚", "💛", "💙", "💜", "🤎", "🤍", "❤️"];
-    const results = [
-      slots[Math.floor(Math.random() * slots.length)],
-      slots[Math.floor(Math.random() * slots.length)],
-      slots[Math.floor(Math.random() * slots.length)],
+    // Premium symbols with different weights
+    const symbols = [
+      { emoji: "🍒", weight: 30 },
+      { emoji: "🍋", weight: 25 },
+      { emoji: "🍇", weight: 20 },
+      { emoji: "🍉", weight: 15 },
+      { emoji: "⭐", weight: 7 },
+      { emoji: "7️⃣", weight: 3 }
     ];
 
-    const winnings = calculateWinnings(results, amount);
-    await usersData.set(senderID, {
-      money: userData.money + winnings,
-      data: userData.data,
-    });
+    // Weighted random selection
+    const roll = () => {
+      const totalWeight = symbols.reduce((sum, symbol) => sum + symbol.weight, 0);
+      let random = Math.random() * totalWeight;
+      for (const symbol of symbols) {
+        if (random < symbol.weight) return symbol.emoji;
+        random -= symbol.weight;
+      }
+      return symbols[0].emoji;
+    };
 
-    const messageText = formatResult(results, winnings, getLang);
-    return message.reply(messageText);
-  },
+    const slot1 = roll();
+    const slot2 = roll();
+    const slot3 = roll();
+
+    // 50% chance to win with various multipliers
+    let winnings = 0;
+    let outcome;
+    let winType = "";
+    let bonus = "";
+
+    if (slot1 === "7️⃣" && slot2 === "7️⃣" && slot3 === "7️⃣") {
+      winnings = bet * 10;
+      outcome = "🔥 𝗠𝗘𝗚𝗔 𝗝𝗔𝗖𝗞𝗣𝗢𝗧! 𝗧𝗥𝗜𝗣𝗟𝗘 7️⃣!";
+      winType = "💎 𝗠𝗔𝗫 𝗪𝗜𝗡";
+      bonus = "🎆 𝗕𝗢𝗡𝗨𝗦: +3% to your total balance!";
+      await usersData.set(senderID, { money: user.money * 1.03 });
+    } 
+    else if (slot1 === slot2 && slot2 === slot3) {
+      winnings = bet * 5;
+      outcome = "💰 𝗝𝗔𝗖𝗞𝗣𝗢𝗧! 3 matching symbols!";
+      winType = "💫 𝗕𝗜𝗚 𝗪𝗜𝗡";
+    } 
+    else if (slot1 === slot2 || slot2 === slot3 || slot1 === slot3) {
+      winnings = bet * 2;
+      outcome = "✨ 𝗡𝗜𝗖𝗘! 2 matching symbols!";
+      winType = "🌟 𝗪𝗜𝗡";
+    } 
+    else if (Math.random() < 0.5) { // 50% base chance to win something
+      winnings = bet * 1.5;
+      outcome = "🎯 𝗟𝗨𝗖𝗞𝗬 𝗦𝗣𝗜𝗡! Bonus win!";
+      winType = "🍀 𝗦𝗠𝗔𝗟𝗟 𝗪𝗜𝗡";
+    } 
+    else {
+      winnings = -bet;
+      outcome = "💸 𝗕𝗘𝗧𝗧𝗘𝗥 𝗟𝗨𝗖𝗞 𝗡𝗘𝗫𝗧 𝗧𝗜𝗠𝗘!";
+      winType = "☠️ 𝗟𝗢𝗦𝗦";
+    }
+
+    await usersData.set(senderID, { money: user.money + winnings });
+    const finalBalance = user.money + winnings;
+
+    // Fancy ASCII art for slots
+    const slotBox = 
+      "╔═════════════════════╗\n" +
+      "║  🎰 𝗦𝗟𝗢𝗧 𝗠𝗔𝗖𝗛𝗜𝗡𝗘 🎰  ║\n" +
+      "╠═════════════════════╣\n" +
+      `║     [ ${slot1} | ${slot2} | ${slot3} ]     ║\n` +
+      "╚═════════════════════╝";
+
+    // Color-coded result message
+    const resultColor = winnings >= 0 ? "🟢" : "🔴";
+    const resultText = winnings >= 0 ? `🏆 𝗪𝗢𝗡: ${formatMoney(winnings)}` : `💸 𝗟𝗢𝗦𝗧: ${formatMoney(bet)}`;
+
+    const messageContent = 
+      `${slotBox}\n\n` +
+      `🎯 𝗥𝗘𝗦𝗨𝗟𝗧: ${outcome}\n` +
+      `${winType ? `${winType}\n` : ""}` +
+      `${bonus ? `${bonus}\n` : ""}` +
+      `\n${resultColor} ${resultText}` +
+      `\n💰 𝗕𝗔𝗟𝗔𝗡𝗖𝗘: ${formatMoney(finalBalance)}` +
+      `\n\n💡 𝗧𝗜𝗣: Higher bets increase jackpot chances!`;
+
+    return message.reply(messageContent);
+  }
 };
-
-function calculateWinnings([a, b, c], bet) {
-  if (a === b && b === c) {
-    if (a === "❤️") return bet * 10;  // Jackpot
-    return bet * 5;                   // 3 same, non-jackpot
-  }
-  if (a === b || b === c || a === c) return bet * 2; // Any two same
-  return -bet; // Lose
-}
-
-function formatResult([a, b, c], winnings, getLang) {
-  const formattedWinnings = formatMoney(Math.abs(winnings));
-
-  if (a === b && b === c && a === "❤️") {
-    return getLang("jackpot_message", formattedWinnings, a, a, b, c);
-  }
-
-  if (winnings > 0) {
-    return getLang("win_message", formattedWinnings, a, b, c);
-  }
-
-  return getLang("lose_message", formattedWinnings, a, b, c);
-}
-
-function formatMoney(amount) {
-  if (amount >= 1e12) return (amount / 1e12).toFixed(2) + "𝗧";
-  if (amount >= 1e9) return (amount / 1e9).toFixed(2) + "𝗕";
-  if (amount >= 1e6) return (amount / 1e6).toFixed(2) + "𝐌";
-  if (amount >= 1e3) return (amount / 1e3).toFixed(2) + "𝗞";
-  return amount.toString();
-}
-
-  
