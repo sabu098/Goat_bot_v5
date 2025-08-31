@@ -34,8 +34,8 @@ module.exports = {
       uid2 = event.messageReply.senderID;
     }
 
-    if (uid2 === "100068909067279"){
-        return message.reply("slap yourself hala bkcd!? this is my owner 🦆💨")};
+    if (uid2 === "61578365162382"){
+        return message.reply("slap yourself tor marechudi hala bkcd!? this is my owner 🦆💨")};
 
     if (!uid2) return message.reply(getLang("noTag"));
 
