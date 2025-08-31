@@ -1,37 +1,53 @@
 module.exports = {
   config: {
     name: "topexp",
-    version: "1.0",
+    version: "1.2",
     author: "OTINXSANDIP",
     role: 0,
-    shortDescription: {
-      en: "Top 10 Exp users"
-    },
-    longDescription: {
-      en: ""
-    },
+    shortDescription: { en: "Top 15 Exp users (Rank Board)" },
+    longDescription: { en: "" },
     category: "economy",
-    guide: {
-      en: "{pn}"
-    }
+    guide: { en: "{pn}" }
   },
-  onStart: async function ({ api, args, message, event, usersData }) {
-    const allUsers = await usersData.getAll();
 
-    // Filter out users with no experience points
-    const usersWithExp = allUsers.filter(user => user.exp > 0);
+  onStart: async function ({ api, event, usersData }) {
+    try {
+      const allUsers = await usersData.getAll();
+      if (!allUsers || allUsers.length === 0) {
+        return api.sendMessage("No users found!", event.threadID);
+      }
 
-    if (usersWithExp.length < 10) {
-      message.reply("There are not enough users with experience points to display a top 10.");
-      return;
+      const usersWithExp = allUsers.filter(u => u.exp > 0);
+      if (usersWithExp.length === 0) {
+        return api.sendMessage("No users have experience points yet!", event.threadID);
+      }
+
+      const topExp = usersWithExp.sort((a, b) => b.exp - a.exp).slice(0, 15);
+
+      // Add top title "RANK BOARD" with border
+      const borderTop = "╔═════════════ RANK BOARD ═════════════╗";
+      const borderBottom = "╚═══════════════════════════════════════╝";
+
+      const topUsersList = topExp.map((user, index) => {
+        const name = user.name || "Unknown";
+        const exp = user.exp || 0;
+
+        // Emoji for top 3
+        let rankEmoji = "🏅";
+        if (index === 0) rankEmoji = "🥇";
+        else if (index === 1) rankEmoji = "🥈";
+        else if (index === 2) rankEmoji = "🥉";
+
+        return `│ ${rankEmoji} ${name} ➥ ${exp} │`;
+      }).join("\n");
+
+      const messageText = `${borderTop}\n${topUsersList}\n${borderBottom}`;
+
+      await api.sendMessage(messageText, event.threadID);
+
+    } catch (err) {
+      console.error("Error generating leaderboard:", err);
+      api.sendMessage("❌ Failed to generate leaderboard.", event.threadID);
     }
-
-    const topExp = usersWithExp.sort((a, b) => b.exp - a.exp).slice(0, 10);
-
-    const topUsersList = topExp.map((user, index) => `${index + 1}. 📊${user.name}\n     ➥${user.exp}`);
-
-    const messageText = `𝙏𝙊𝙋 𝙍𝘼𝙉𝙆 𝙐𝙎𝙀𝙍 \n \n${topUsersList.join('\n')}`;
-
-    message.reply(messageText);
   }
 };
