@@ -1,188 +1,124 @@
+const fs = require("fs-extra");
+const { utils } = global;
+
 module.exports = {
-config: {
-name: "prefix",
-version: "1.7.0",
-author: "Azad",
-role: 0,
-shortDescription: "Animated stylish prefix info card",
-longDescription: "Replies with an animated style image showing prefix info, server time, user name and profile picture with glow, shadows, and abstract background patterns.",
-category: "utility"
-},
+    config: {
+        name: "prefix",
+        version: "1.6",
+        author: "Azad",
+        countDown: 5,
+        role: 0,
+        description: "Change or check bot prefix in your chat or globally (admin only)",
+        category: "config",
+        guide: {
+            vi: "   {pn} <new prefix>: change prefix in your chat\n"
+                + "   Example: {pn} #\n"
+                + "   {pn} <new prefix> -g: change prefix globally (admin only)\n"
+                + "   Example: {pn} # -g\n"
+                + "   {pn} reset: reset prefix in your chat",
+            en: "   {pn} <new prefix>: change prefix in your chat\n"
+                + "   Example: {pn} #\n"
+                + "   {pn} <new prefix> -g: change prefix globally (admin only)\n"
+                + "   Example: {pn} # -g\n"
+                + "   {pn} reset: reset prefix in your chat"
+        }
+    },
 
-onStart: async function () {},
+    langs: {
+        vi: {
+            reset: "Đã reset prefix về mặc định: %1",
+            onlyAdmin: "Chỉ admin mới có thể thay đổi prefix toàn hệ thống",
+            confirmGlobal: "Vui lòng react để xác nhận thay đổi prefix toàn hệ thống",
+            confirmThisThread: "Vui lòng react để xác nhận thay đổi prefix nhóm chat",
+            successGlobal: "Đã thay đổi prefix toàn hệ thống: %1",
+            successThisThread: "Đã thay đổi prefix nhóm chat: %1",
+            myPrefix: "🌐 System prefix: %1\n🛸 Thread prefix: %2"
+        },
+        en: {
+            reset: "Prefix has been reset to default: %1",
+            onlyAdmin: "Only admin can change system-wide prefix",
+            confirmGlobal: "Please react to confirm system-wide prefix change",
+            confirmThisThread: "Please react to confirm thread prefix change",
+            successGlobal: "System-wide prefix changed to: %1",
+            successThisThread: "Thread prefix changed to: %1",
+            myPrefix: "🌐 System prefix: %1\n🛸 Thread prefix: %2"
+        }
+    },
 
-onChat: async function ({ api, event, message, threadsData, usersData }) {
-const fs = require("fs");
-const path = require("path");
-const { createCanvas, loadImage } = require("canvas");
-const axios = require("axios");
+    onStart: async function ({ message, role, args, commandName, event, threadsData, getLang }) {
+        if (!args[0]) return message.SyntaxError();
 
-if (!event.body || event.body.toLowerCase().trim() !== "prefix") return;  
+        if (args[0] === "reset") {
+            await threadsData.set(event.threadID, null, "data.prefix");
+            return message.reply(getLang("reset", global.GoatBot.config.prefix));
+        }
 
-try {  
-  const threadID = event.threadID;  
-  const senderID = event.senderID;  
+        const newPrefix = args[0];
+        const formSet = { commandName, author: event.senderID, newPrefix };
 
-  // --- Get prefixes ---  
-  const systemPrefix = (global.GoatBot?.config?.prefix) || "/";  
-  let groupPrefix = systemPrefix;  
-  try {  
-    const tdata = await threadsData.get(threadID);  
-    if (tdata?.data?.prefix) groupPrefix = tdata.data.prefix;  
-  } catch (_) {}  
+        if (args[1] === "-g") {
+            if (role < 2) return message.reply(getLang("onlyAdmin"));
+            formSet.setGlobal = true;
+        } else {
+            formSet.setGlobal = false;
+        }
 
-  // --- Get user info ---  
-  const userInfo = await api.getUserInfo(senderID);  
-  const userName = userInfo[senderID]?.name || "Unknown User";  
+        return message.reply(
+            args[1] === "-g" ? getLang("confirmGlobal") : getLang("confirmThisThread"),
+            (err, info) => {
+                formSet.messageID = info.messageID;
+                global.GoatBot.onReaction.set(info.messageID, formSet);
+            }
+        );
+    },
 
-  // --- Get avatar ---  
-  let avatar;  
-  try {  
-    const avatarUrl = await usersData.getAvatarUrl(senderID);  
-    const avatarRes = await axios.get(avatarUrl, { responseType: "arraybuffer" });  
-    avatar = await loadImage(Buffer.from(avatarRes.data, "binary"));  
-  } catch (err) {  
-    const fallbackURL = "https://i.imgur.com/0eg0aG3.png";  
-    const fbRes = await axios.get(fallbackURL, { responseType: "arraybuffer" });  
-    avatar = await loadImage(Buffer.from(fbRes.data, "binary"));  
-  }  
+    onReaction: async function ({ message, threadsData, event, Reaction, getLang }) {
+        const { author, newPrefix, setGlobal } = Reaction;
+        if (event.userID !== author) return;
 
-  // --- Server Time ---  
-  const serverTime = new Date().toLocaleString("en-GB", { timeZone: "Asia/Dhaka", hour12: false });  
+        if (setGlobal) {
+            global.GoatBot.config.prefix = newPrefix;
+            fs.writeFileSync(global.client.dirConfig, JSON.stringify(global.GoatBot.config, null, 2));
+            return message.reply(getLang("successGlobal", newPrefix));
+        } else {
+            await threadsData.set(event.threadID, newPrefix, "data.prefix");
+            return message.reply(getLang("successThisThread", newPrefix));
+        }
+    },
 
-  // --- Canvas ---  
-  const W = 1200, H = 700;  
-  const canvas = createCanvas(W, H);  
-  const ctx = canvas.getContext("2d");  
+    onChat: async function ({ event, message, getLang, api }) {
+        if (event.body && event.body.toLowerCase() === "prefix") {
+            // Bot uptime
+            const botUptime = process.uptime();
+            const hours = Math.floor(botUptime / 3600);
+            const minutes = Math.floor((botUptime % 3600) / 60);
+            const seconds = Math.floor(botUptime % 60);
+            const uptimeText = `${hours}h ${minutes}m ${seconds}s`;
 
-  // Background gradient  
-  const bg = ctx.createLinearGradient(0, 0, W, H);  
-  bg.addColorStop(0, "#0f172a");  
-  bg.addColorStop(1, "#1e293b");  
-  ctx.fillStyle = bg;  
-  ctx.fillRect(0, 0, W, H);  
+            // Get user name
+            let senderName = "User";
+            try {
+                const userInfo = await api.getUserInfo(event.senderID);
+                senderName = userInfo[event.senderID].name || "User";
+            } catch (e) {}
 
-  // Abstract wave pattern  
-  drawAbstractPattern(ctx, W, H);  
+            // Get thread prefix dynamically
+            const threadPrefix = utils.getPrefix(event.threadID);
+            const systemPrefix = global.GoatBot.config.prefix;
 
-  // Rounded card  
-  const pad = 40;  
-  const cardW = W - pad * 2;  
-  const cardH = H - pad * 2;  
-  const radius = 40;  
-  ctx.shadowColor = "rgba(0,0,0,0.35)";  
-  ctx.shadowBlur = 25;  
-  ctx.shadowOffsetX = 0;  
-  ctx.shadowOffsetY = 10;  
-  ctx.fillStyle = "rgba(255,255,255,0.08)";  
-  roundedRect(ctx, pad, pad, cardW, cardH, radius);  
-  ctx.fill();  
-  ctx.shadowBlur = 0;  
+            // Fancy GoatBot box
+            const boxMessage = `
+╔════════════════════════════╗
+🎉 Hey, ${senderName}! 🎉
+────────────────────────────
+🕒 Bot Uptime: ⏳ ${uptimeText}
+🌐 System Prefix: ${systemPrefix}
+🛸 Thread Prefix: ${threadPrefix}
+────────────────────────────
+💡 Tip: Type "${threadPrefix} <new prefix>" to change it!
+✨ Enjoy chatting with GoatBot! ✨
+╚════════════════════════════╝
+            `.trim();
 
-  // Title  
-  const titleGradient = ctx.createLinearGradient(W/2 - 250, 0, W/2 + 250, 0);  
-  titleGradient.addColorStop(0, "#facc15");  
-  titleGradient.addColorStop(1, "#38bdf8");  
-  ctx.fillStyle = titleGradient;  
-  ctx.font = "bold 75px sans-serif";  
-  ctx.textAlign = "center";  
-  ctx.shadowColor = "rgba(0,0,0,0.4)";  
-  ctx.shadowBlur = 8;  
-  ctx.fillText("Bot Prefix Info", W / 2, 100);  
-  ctx.shadowBlur = 0;  
-
-  // Info Text  
-  ctx.font = "bold 48px sans-serif";  
-  ctx.textAlign = "center";  
-  ctx.shadowColor = "rgba(0,0,0,0.25)";  
-  ctx.shadowBlur = 5;  
-
-  ctx.fillStyle = "#38bdf8";  
-  ctx.fillText(`System Prefix : ${systemPrefix}`, W / 2, 200);  
-
-  ctx.fillStyle = "#22c55e";  
-  ctx.fillText(`Your Group Prefix : ${groupPrefix}`, W / 2, 270);  
-
-  ctx.fillStyle = "#f87171";  
-  ctx.fillText(`Server Time : ${serverTime}`, W / 2, 340);  
-  ctx.shadowBlur = 0;  
-
-  ctx.font = "bold 55px sans-serif";  
-  ctx.fillStyle = "#fff";  
-  ctx.fillText(`User : ${userName}`, W / 2, 420);  
-
-  // Profile picture with glow and border  
-  const size = 160;  
-  const x = W / 2 - size / 2;  
-  const y = 450;  
-
-  ctx.save();  
-  ctx.shadowColor = "#38bdf8";  
-  ctx.shadowBlur = 35;  
-  ctx.shadowOffsetX = 0;  
-  ctx.shadowOffsetY = 0;  
-  ctx.beginPath();  
-  ctx.arc(W / 2, y + size / 2, size / 2, 0, Math.PI * 2);  
-  ctx.closePath();  
-  ctx.fillStyle = "#00000000";  
-  ctx.fill();  
-  ctx.restore();  
-
-  ctx.save();  
-  ctx.beginPath();  
-  ctx.arc(W / 2, y + size / 2, size / 2, 0, Math.PI * 2);  
-  ctx.closePath();  
-  ctx.clip();  
-  ctx.drawImage(avatar, x, y, size, size);  
-  ctx.restore();  
-
-  ctx.beginPath();  
-  ctx.arc(W / 2, y + size / 2, size / 2 + 4, 0, Math.PI * 2);  
-  ctx.strokeStyle = "#38bdf8";  
-  ctx.lineWidth = 4;  
-  ctx.stroke();  
-
-  // --- Save and send ---  
-  const cacheDir = path.join(__dirname, "../cache");  
-  if (!fs.existsSync(cacheDir)) fs.mkdirSync(cacheDir, { recursive: true });  
-  const outPath = path.join(cacheDir, `prefix_${Date.now()}.png`);  
-  fs.writeFileSync(outPath, canvas.toBuffer("image/png"));  
-
-  await message.reply({  
-    body: `✨ Azad chat bot Prefix Info ✅`,  
-    attachment: fs.createReadStream(outPath)  
-  });  
-
-  setTimeout(() => fs.existsSync(outPath) && fs.unlinkSync(outPath), 60000);  
-
-} catch (err) {  
-  console.error(err);  
-  return message.reply("দুঃখিত, ছবি বানাতে সমস্যা হয়েছে: " + err.message);  
-}  
-
-// Helper functions  
-function roundedRect(ctx, x, y, w, h, r) {  
-  ctx.beginPath();  
-  ctx.moveTo(x + r, y);  
-  ctx.arcTo(x + w, y, x + w, y + h, r);  
-  ctx.arcTo(x + w, y + h, x, y + h, r);  
-  ctx.arcTo(x, y + h, x, y, r);  
-  ctx.arcTo(x, y, x + w, y, r);  
-  ctx.closePath();  
-}  
-
-function drawAbstractPattern(ctx, W, H) {  
-  for (let i = 0; i < 6; i++) {  
-    const gradient = ctx.createRadialGradient(  
-      Math.random() * W, Math.random() * H, 50,  
-      Math.random() * W, Math.random() * H, 300  
-    );  
-    gradient.addColorStop(0, `rgba(${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},${Math.floor(Math.random()*255)},0.05)`);  
-    gradient.addColorStop(1, "rgba(0,0,0,0)");  
-    ctx.fillStyle = gradient;  
-    ctx.fillRect(0, 0, W, H);  
-  }  
-}
-
-}
-};
+            return message.reply(boxMessage);
+        }
