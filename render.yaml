@@ -1,14 +1,16 @@
-# Exported from Render on 2025-06-15T01:18:42ZAdd commentMore actions
+# Render deploy config for Bot-v3 (Forked by Azad)
 services:
-- type: web
-  name: ShipuAiGoatBot
-  runtime: node
-  repo: https://github.com/brandchitron/ShipuAiGoatBot
-  plan: free
-  region: oregon
-  buildCommand: npm install
-  startCommand: node index.js
-  autoDeployTrigger: commit
-	version: "1
-  healthCheckPath: /health
-  healthCheckTimeoutSeconds: 30
+  - type: web
+    name: Bot-v3
+    runtime: node
+    repo: https://github.com/Azad-bot-v3/Bot-v3
+    plan: free
+    region: oregon
+    buildCommand: npm install
+    startCommand: node index.js
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 18
+    healthCheckPath: /health
+    healthCheckTimeoutSeconds: 30
