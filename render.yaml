@@ -1,7 +1,7 @@
-# Render deploy config for Bot-v3 (Forked by Azad)
+# Render deploy config for Goat Bot V2 (Forked by Azad)
 services:
   - type: web
-    name: Bot-v3
+    name: Goat-Bot-V2
     runtime: node
     repo: https://github.com/Azad-bot-v3/Bot-v3
     plan: free
