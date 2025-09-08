@@ -1,5 +1,20 @@
-FROM node:16
+# Use official Node.js 19 image
+FROM node:19-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Copy package.json and package-lock.json first for caching
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install --production
+
+# Copy the rest of the app
 COPY . .
-RUN npm install
+
+# Expose the web server port
 EXPOSE 3000
-CMD [ "node" ,"index.js" ]
+
+# Start the bot
+CMD ["node", "index.js"]
