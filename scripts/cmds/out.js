@@ -1,32 +1,30 @@
+const axios = require("axios");
+const fs = require("fs-extra");
+const request = require("request");
 module.exports = {
 	config: {
-		name: "out",
+		name: "Out",
+		aliases: ["l"],
 		version: "1.0",
-		author: "XyryllPanget",
+		author: "Sandy",
 		countDown: 5,
 		role: 2,
-		shortDescription: {
-			vi: "",
-			en: "kick 🦶 bot from gc by owner bot"
-		},
-		longDescription: {
-			vi: "",
-			en: "remove bot from group "
-		},
-		category: "owner",
+		shortDescription: "bot will leave gc",
+		longDescription: "",
+		category: "admin",
 		guide: {
-			vi: "",
-			en: "just write غادر"
+			vi: "{pn} [tid,blank]",
+			en: "{pn} [tid,blank]"
 		}
-},
-	onStart: async function ({ api, args, message, event }) {
-		const permission = ["61578365162382"];
-  if (!permission.includes(event.senderID)) {
-    api.sendMessage("Khanakiar chele Amare bahir korar tui ke bol ? 🤬😤.", event.threadID, event.messageID);
-    return;
-  }
+	},
 
-			if (!args[0]) return api.removeUserFromGroup(api.getCurrentUserID(), event.threadID);
-				if (!isNaN(args[0])) return api.removeUserFromGroup(api.getCurrentUserID(), args.join(" "));
-	}
-                                                            }
+	onStart: async function ({ api,event,args, message }) {
+ var id;
+ if (!args.join(" ")) {
+ id = event.threadID;
+ } else {
+ id = parseInt(args.join(" "));
+ }
+ return api.sendMessage('🎀𝗔𝘇𝗮𝗱 vai bollo 𝐋𝐄𝐅𝐓 nite tai ar thakte parbo na ok bye allah Hafez🎀', id, () => api.removeUserFromGroup(api.getCurrentUserID(), id))
+		}
+	};
