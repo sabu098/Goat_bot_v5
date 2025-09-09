@@ -34,7 +34,7 @@ module.exports = {
                 + "\n %1"
                 + "\n _____________________________"
                 + "\n ♔︎ 𝑂𝑊𝑁𝐸𝑅 ♔︎:https://www.facebook.com/profile.php?id=61578365162382"
-                + "\n |__🅰🆉🅰🅳'_𝐵𝑂𝑇__|",
+                + "\n |︵✰[_🪽°𝙉𝙚𝙯𝙪𝙠𝙤 𝘾𝙝𝙖𝙣°🐰_]࿐|",
             noAdmin: "⚠️ | No admins found!",
             added: "✅ | Added admin role for %1 users:\n%2",
             alreadyAdmin: "\n⚠️ | %1 users already have admin role:\n%2",
