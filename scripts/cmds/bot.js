@@ -76,7 +76,7 @@ const randomReplies = [
 
 module.exports = {
   config: {
-    name: "Bot",
+    name: "bby",
     version: "2.6",
     author: "MahMUD",
     role: 0,
@@ -84,18 +84,18 @@ module.exports = {
     guide: { en: "Type bby, bot, azad, or nezuko to get a fun reply" }
   },
 
-  onChat: async function({ api, event }) {
+  // Framework expects onStart, not onChat
+  onStart: async function({ api, event }) {
     const message = event.body?.toLowerCase() || "";
     api.sendTypingIndicator(event.threadID, true);
 
     if (mahmuds.some(word => message.includes(word))) {
-      // Random reply
       const randomMsg = randomReplies[Math.floor(Math.random() * randomReplies.length)];
 
-      // Send message and react with 😼
+      // Send message and react
       api.sendMessage(randomMsg, event.threadID, (err, info) => {
         if (!err) {
-          api.setMessageReaction("😼", event.messageID, () => {}, true);
+          api.setMessageReaction("😼", info.messageID || event.messageID, () => {}, true);
         }
       }, event.messageID);
     }
