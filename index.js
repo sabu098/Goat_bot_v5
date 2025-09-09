@@ -1,12 +1,13 @@
 /**
-@author NTKhang
-! Official source code: https://github.com/ntkhang03/Goat-Bot-V2
-*/
+ * @author NTKhang
+ * ! The source code is written by NTKhang, please don't change the author's name everywhere.
+ * ! Official source code: https://github.com/ntkhang03/Goat-Bot-V2
+ */
 
 const { spawn } = require("child_process");
-const path = require("path");
+const log = require("./logger/log.js");
 
-// ---------- Web server to keep bot alive ----------
+// ---------- Added: Fake web server for Render ----------
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,32 +19,21 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
   console.log(`🌐 Web server listening on port ${PORT}`);
 });
-// ----------------------------------------------------
+// -------------------------------------------------------
 
-// ---------- Function to start bot ----------
-function startBot() {
-  console.log("🚀 Starting Goat Bot...");
-
-  const botPath = path.join(__dirname, "Goat.js");
-
-  const child = spawn("node", [botPath], {
+function startProject() {
+  const child = spawn("node", ["Goat.js"], {
     cwd: __dirname,
     stdio: "inherit",
     shell: true
   });
 
-  child.on("error", (err) => {
-    console.error("❌ Failed to start bot:", err);
-  });
-
   child.on("close", (code) => {
-    if (code === 0) {
-      console.log("⚡ Bot exited normally.");
-    } else {
-      console.error(`❌ Bot stopped with exit code ${code}. Restarting...`);
-      setTimeout(startBot, 3000); // wait 3 sec before restart
+    if (code == 2) {
+      log.info("Restarting Project...");
+      startProject();
     }
   });
 }
 
-startBot();
+startProject();
