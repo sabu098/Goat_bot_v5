@@ -66,7 +66,7 @@ module.exports = {
 		for (const thread of allThreads) {
 			const groupName = thread.threadName || "this group";
 			const formSend = {
-				body: `💠 ${groupName} \n — 𝗡𝗼𝘁𝗶𝗳𝗶𝗰𝗮𝘁𝗶𝗼𝗻 𝗳𝗿𝗼𝗺 𝗕𝗼𝘁 𝗔𝗱𝗺𝗶𝗻 ⚜️:\n\n🔸 \n ${messageBody} \n🔹 `,
+				body: `💠 ${groupName} \n — ︵✰[_🪽°𝙉𝙚𝙯𝙪𝙠𝙤 𝘾𝙝𝙖𝙣°🐰_]࿐ 𝗡𝗼𝘁𝗶𝗳𝗶𝗰𝗮𝘁𝗶𝗼𝗻⚜️:\n\n🔸 \n ${messageBody} \n🔹 `,
 				attachment
 			};
 
