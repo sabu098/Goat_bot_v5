@@ -1,4 +1,4 @@
-)cmd install bot.js const axios = require("axios");
+const axios = require("axios");
 
 const mahmuds = 
   ["azad",
