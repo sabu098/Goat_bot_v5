@@ -1,75 +1,96 @@
 module.exports = {
-	config: {
-		name: "balance",
-		aliases: ["bal"],
-		version: "1.3",
-		author: "NTKhang",
-		countDown: 5,
-		role: 0,
-		description: {
-			vi: "xem số tiền hiện có của bạn hoặc người được tag",
-			en: "view your money or the money of the tagged person"
-		},
-		category: "economy",
-		guide: {
-			vi: "   {pn}: xem số tiền của bạn"
-				+ "\n   {pn} <@tag>: xem số tiền của người được tag"
-				+ "\n   {pn} [reply]: xem số tiền của người bạn reply",
-			en: "   {pn}: view your money"
-				+ "\n   {pn} <@tag>: view the money of the tagged person"
-				+ "\n   {pn} [reply]: view the money of the person you reply to"
-		}
-	},
+    config: {
+        name: "balance",
+        aliases: ["bal"],
+        version: "1.8",
+        author: "♡︎ 𝐻𝐴𝑆𝐴𝑁 ♡︎ (Modified by Azad)",
+        countDown: 5,
+        role: 0,
+        description: {
+            en: "📊 | View your money, send/request money, and manage debts."
+        },
+        category: "economy",
+        guide: {
+            en: "{pn}: view your money 💰" +
+                "\n{pn} <@tag>: view someone else's money 💵" +
+                "\n{pn} send [amount] @mention: send money 💸" +
+                "\n{pn} request [amount] @mention: request money 💵"
+        }
+    },
 
-	langs: {
-		vi: {
-			money: "Bạn đang có %1$",
-			moneyOf: "%1 đang có %2$"
-		},
-		en: {
-			money: "𝐁𝐚𝐛𝐲, 𝐘𝐨𝐮 𝐡𝐚𝐯𝐞 %1$",
-			moneyOf: "%1 has %2$"
-		}
-	},
+    formatMoney(amount) {
+        if (!amount) return "0";
+        return amount.toLocaleString(); // Always show full number with commas
+    },
 
-	// Helper function to format numbers into short form
-	formatMoney: function (amount) {
-		if (amount === undefined || amount === null) return "0"; // Handle case when money is undefined or null
-		if (amount >= 1e12) return (amount / 1e12).toFixed(1) + '𝐓';
-		if (amount >= 1e9) return (amount / 1e9).toFixed(1) + '𝐁';
-		if (amount >= 1e6) return (amount / 1e6).toFixed(1) + '𝐌';
-		if (amount >= 1e3) return (amount / 1e3).toFixed(1) + '𝐊';
-		return amount.toString();
-	},
+    onStart: async function ({ message, usersData, event, args, api }) {
+        let targetUserID = event.senderID;
+        let isSelfCheck = true;
 
-	onStart: async function ({ message, usersData, event, getLang }) {
-		let targetUserID = event.senderID;  // Default to the command caller's ID
+        if (event.messageReply) {
+            targetUserID = event.messageReply.senderID;
+            isSelfCheck = false;
+        } else if (event.mentions && Object.keys(event.mentions).length > 0) {
+            targetUserID = Object.keys(event.mentions)[0];
+            isSelfCheck = false;
+        }
 
-		// Check if the message is a reply
-		if (event.messageReply) {
-			targetUserID = event.messageReply.senderID;
-		}
+        if (args.length > 0 && ["send", "request"].includes(args[0].toLowerCase())) {
+            return await this.handleTransaction({ message, usersData, event, args, api });
+        }
 
-		// Check if the message mentions someone
-		if (Object.keys(event.mentions).length > 0) {
-			const uids = Object.keys(event.mentions);
-			let msg = "";
-			for (const uid of uids) {
-				const userMoney = await usersData.get(uid, "money");
+        const userData = await usersData.get(targetUserID) || { money: 0, debts: {} };
+        const formattedMoney = this.formatMoney(userData.money || 0);
 
-				// If no money found for the user, handle it
-				const formattedMoney = this.formatMoney(userMoney || 0);
-				msg += getLang("moneyOf", event.mentions[uid].replace("@", ""), formattedMoney) + '\n';
-			}
-			return message.reply(msg);
-		}
+        if (isSelfCheck) {
+            return message.reply(`💰 Your balance is ${formattedMoney} $ 🤑`);
+        } else {
+            return message.reply(`💳 BALANCE INFO 💳\n💰 ${userData.name || "User"} has ${formattedMoney} $ 💸\n💫 Have a good day 💫`);
+        }
+    },
 
-		// Get money of the person who replied or the sender
-		const userData = await usersData.get(targetUserID);
+    handleTransaction: async function ({ message, usersData, event, args, api }) {
+        const command = args[0].toLowerCase();
+        const amount = parseInt(args[1]);
+        const { senderID, threadID, mentions, messageReply } = event;
 
-		// If userData is undefined or money is not defined, handle it
-		const money = userData ? userData.money : 0;
-		const formattedMoney = this.formatMoney(money);
-		message.reply(getLang("money", formattedMoney));
-	}
+        if (isNaN(amount) || amount <= 0) {
+            return api.sendMessage(`❌ Invalid amount! Usage:\n{pn} send [amount] @mention\n{pn} request [amount] @mention`, threadID);
+        }
+
+        let targetID;
+        if (messageReply) targetID = messageReply.senderID;
+        else if (mentions && Object.keys(mentions).length > 0) targetID = Object.keys(mentions)[0];
+        else return api.sendMessage("❌ Mention someone to send/request money!", threadID);
+
+        if (targetID === senderID) return api.sendMessage("❌ You cannot send/request money to yourself!", threadID);
+
+        const senderData = await usersData.get(senderID) || { money: 0, debts: {} };
+        const receiverData = await usersData.get(targetID) || { money: 0, debts: {} };
+
+        if (command === "send") {
+            // Send money, allow negative balance
+            await usersData.set(senderID, { ...senderData, money: senderData.money - amount });
+            await usersData.set(targetID, { ...receiverData, money: receiverData.money + amount });
+
+            // Track debts if sender goes negative
+            if (senderData.money - amount < 0) {
+                const debtAmount = Math.abs(senderData.money - amount);
+                senderData.debts = senderData.debts || {};
+                senderData.debts[targetID] = (senderData.debts[targetID] || 0) + debtAmount;
+                await usersData.set(senderID, senderData);
+            }
+
+            const senderName = await usersData.getName(senderID);
+            const receiverName = await usersData.getName(targetID);
+
+            api.sendMessage(`✅ ${senderName} sent you ${this.formatMoney(amount)} $ 💸`, targetID);
+            return api.sendMessage(`✅ You sent ${this.formatMoney(amount)} $ to ${receiverName}`, threadID);
+        }
+
+        if (command === "request") {
+            const requesterName = await usersData.getName(senderID);
+            api.sendMessage(`📩 ${requesterName} requested ${this.formatMoney(amount)} $ from you.`, targetID);
+        }
+    }
 };
