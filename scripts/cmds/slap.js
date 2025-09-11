@@ -35,7 +35,7 @@ module.exports = {
     }
 
     if (uid2 === "61578365162382"){
-        return message.reply("slap yourself tor marechudi hala bkcd!? this is my owner 🦆💨")};
+        return message.reply("𝙨𝙡𝙖𝙥 𝙮𝙤𝙪𝙧𝙨𝙚𝙡𝙛 𝙩𝙤𝙧 𝙢𝙖𝙧𝙚𝙘𝙝𝙪𝙙𝙞 𝙝𝙖𝙡𝙖 𝙗𝙠𝙘𝙙!? 𝙩𝙝𝙞𝙨 𝙞𝙨 𝙢𝙮 𝙤𝙬𝙣𝙚𝙧 🦆💨")};
 
     if (!uid2) return message.reply(getLang("noTag"));
 
