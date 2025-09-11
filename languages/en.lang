@@ -89,29 +89,36 @@ handlerCheckData.cantCreateThread=Groups with id '%1' cannot be written to the d
 handlerCheckData.cantCreateUser=Users with id '%1' cannot be written to the database!
 
 # bot/handler/handlerEvents.js
-handlerEvents.userBanned=You have been banned from using the bot\n» Reason: %1\n» Time: %2\n» User ID: %3
-handlerEvents.threadBanned=This group has been banned from using the bot\n» Reason: %1\n» Time: %2\n» Thread ID: %3
-handlerEvents.onlyAdminBox=This group is currently enabled only group administrators can use the bot
-handlerEvents.onlyAdminBot= 🔖 | 𝐂𝐮𝐫𝐫𝐞𝐧𝐭𝐥𝐲 𝐨𝐧𝐥𝐲 𝐛𝐨𝐭'𝐬 𝐚𝐝𝐦𝐢𝐧 𝐜𝐚𝐧 𝐮𝐬𝐞 𝐛𝐨𝐭
-handlerEvents.commandNotFound=❕ | 𝐂𝐨𝐦𝐦𝐚𝐧𝐝 \"%1\" 𝐝𝐨𝐞𝐬 𝐧𝐨𝐭 𝐞𝐱𝐢𝐬𝐭, 𝐓𝐲𝐩𝐞 %2𝐡𝐞𝐥𝐩 𝐭𝐨 𝐬𝐞𝐞 𝐚𝐥𝐥 𝐚𝐯𝐚𝐢𝐥𝐚𝐛𝐥𝐞 𝐜𝐨𝐦𝐦𝐚𝐧𝐝𝐬.
-handlerEvents.commandNotFound2=🎀 | 𝐓𝐡𝐞 𝐜𝐨𝐦𝐦𝐚𝐧𝐝 𝐲𝐨𝐮 𝐚𝐫𝐞 𝐮𝐬𝐢𝐧𝐠 𝐝𝐨𝐞𝐬 𝐧𝐨𝐭 𝐞𝐱𝐢𝐬𝐭, 𝐭𝐲𝐩𝐞 %1𝐡𝐞𝐥𝐩 𝐭𝐨 𝐬𝐞𝐞 𝐚𝐥𝐥 𝐚𝐯𝐚𝐢𝐥𝐚𝐛𝐥𝐞 𝐜𝐨𝐦𝐦𝐚𝐧𝐝𝐬
-handlerEvents.commandSyntaxError=The command you are using is wrong syntax, please type %1help %2 to see the details of how to use this command
-handlerEvents.onlyAdmin=❌ | Only group administrators can use the command "%1"
-handlerEvents.onlyAdminToUseOnReply=❌ | Only group administrators can use the reply function of the command "%1"
-handlerEvents.onlyAdminToUseOnReaction=❌ | Only group administrators can use the reaction function of the command "%1"
-handlerEvents.onlyAdminBot2=❌ | Only bot's admin can use the command "%1"
-handlerEvents.onlyAdminBot2ToUseOnReply=❌ | Only bot's admin can use the reply function of the command "%1"
-handlerEvents.onlyAdminBot2ToUseOnReaction=❌ | Only bot's admin can use the reaction function of the command "%1"
-handlerEvents.waitingForCommand=⏱ You are in the waiting time to use this command, please come back after %1s
-handlerEvents.errorOccurred=❌ [ %1 ]\nAn error occurred at command "%2"\n\n%3
-handlerEvents.errorOccurred2=❌ [ %1 ]\nAn error occurred at command onChat in command "%2"\n\n%3
-handlerEvents.errorOccurred3=❌ [ %1 ]\nAn error occurred when executing onReply at command "%2"\n\n%3
-handlerEvents.errorOccurred4=❌ [ %1 ]\nAn error occurred when executing onReaction at command "%2"\n\n%3
-handlerEvents.errorOccurred5=❌ [ %1 ]\nAn error occurred when executing onEvent at command "%2"\n\n%3
-handlerEvents.errorOccurred6=❌ [ %1 ]\nAn error occurred when executing onEvent at command "%2"\n\n%3
-handlerEvents.errorOccurred7=❌ [ %1 ]\nAn error occurred when executing onAnyEvent at command "%2"\n\n%3
-handlerEvents.cannotFindCommandName=❌ Cannot find command name to execute this reply!
-handlerEvents.cannotFindCommand=❌ Cannot find command "%1" to execute this reply!
+handlerEvents.userBanned==✦━━━━━━━━━━━━━━━━━✦\n⛔ 𝗬𝗼𝘂 𝗵𝗮𝘃𝗲 𝗯𝗲𝗲𝗻 𝗕𝗔𝗡𝗡𝗘𝗗 𝗳𝗿𝗼𝗺 𝘂𝘀𝗶𝗻𝗴 𝘁𝗵𝗲 𝗯𝗼𝘁!\n\n🔒 𝗥𝗲𝗮𝘀𝗼𝗻: %1\n🕰 𝗧𝗶𝗺𝗲: %2\n🆔 𝗨𝘀𝗲𝗿 𝗜𝗗: %3\n✦━━━━━━━━━━━━━━━━━✦
+handlerEvents.threadBanned=✦━━━━━━━━━━━━━━━━━✦\n🚫 𝗧𝗵𝗶𝘀 𝗴𝗿𝗼𝘂𝗽 𝗵𝗮𝘀 𝗯𝗲𝗲𝗻 𝗕𝗔𝗡𝗡𝗘𝗗 𝗳𝗿𝗼𝗺 𝘂𝘀𝗶𝗻𝗴 𝘁𝗵𝗲 𝗯𝗼𝘁!\n\n🔒 𝗥𝗲𝗮𝘀𝗼𝗻: %1\n🕰 𝗧𝗶𝗺𝗲: %2\n🧵 𝗧𝗵𝗿𝗲𝗮𝗱 𝗜𝗗: %3\n✦━━━━━━━━━━━━━━━━━✦
+handlerEvents.onlyAdminBox=✦━━━━━━━━━━━━━━━━━✦\n🔐 𝗢𝗻𝗹𝘆 𝗴𝗿𝗼𝘂𝗽 𝗮𝗱𝗺𝗶𝗻𝘀 𝗰𝗮𝗻 𝘂𝘀𝗲 𝘁𝗵𝗲 𝗯𝗼𝘁 𝗿𝗶𝗴𝗵𝘁 𝗻𝗼𝘄!\n✦━━━━━━━━━━━━━━━━━✦
+handlerEvents.onlyAdminBot=✦━━━━━━━━━━━━━━━━━✦\n❌ 𝗢𝗻𝗹𝘆 𝘁𝗵𝗲 𝗯𝗼𝘁'𝘀 𝗮𝗱𝗺𝗶𝗻𝘀 𝗮𝗿𝗲 𝗮𝗹𝗹𝗼𝘄𝗲𝗱 𝘁𝗼 𝘂𝘀𝗲 𝗶𝘁 𝗿𝗶𝗴𝗵𝘁 𝗻𝗼𝘄!\n✦━━━━━━━━━━━━━━━━━✦
+handlerEvents.commandNotFound=✦━━━━━━━━━━━━━━━━━✦\n📛 𝗖𝗼𝗺𝗺𝗮𝗻𝗱 "𝘀𝗮𝗶𝗱 𝗮𝘀 %1" 𝗱𝗼𝗲𝘀 𝗻𝗼𝘁 𝗲𝘅𝗶𝘀𝘁.\n💡 𝗧𝘆𝗽𝗲 %2𝗵𝗲𝗹𝗽 𝘁𝗼 𝘀𝗲𝗲 𝗮𝗹𝗹 𝗮𝘃𝗮𝗶𝗹𝗮𝗯𝗹𝗲 𝗰𝗼𝗺𝗺𝗮𝗻𝗱𝘀.\n✦━━━━━━━━━━━━━━━━━✦
+handlerEvents.commandNotFound2=✦━━━━━━━━━━━━━━━━━✦
+😏 কিরে হালা! তুই এখনো bot use করোস?
+📚 যা পড়ে বস, না হলে টাকা কামা! ১ দিন তুইও টাকার রাজা হবি। 💥
+✦━━━━━━━━━━━━━━━━━✦
+handlerEvents.commandSyntaxError=✦━━━━━━━━━━━━━━━━━✦\n⚠️ 𝗪𝗿𝗼𝗻𝗴 𝗰𝗼𝗺𝗺𝗮𝗻𝗱 𝘀𝘆𝗻𝘁𝗮𝘅!\n🧾 𝗧𝘆𝗽𝗲 %1𝗵𝗲𝗹𝗽 %2 𝘁𝗼 𝘀𝗲𝗲 𝗵𝗼𝘄 𝘁𝗼 𝘂𝘀𝗲 𝗶𝘁 𝗽𝗿𝗼𝗽𝗲𝗿𝗹𝘆.\n✦━━━━━━━━━━━━━━━━━✦
+handlerEvents.onlyAdmin=✦━━━━━━━━━━━━━━━━━✦\n🔐 𝗢𝗻𝗹𝘆 𝗴𝗿𝗼𝘂𝗽 𝗮𝗱𝗺𝗶𝗻𝘀 𝗰𝗮𝗻 𝘂𝘀𝗲 𝘁𝗵𝗲 "𝗰𝗺𝗱: %1"\n✦━━━━━━━━━━━━━━━━━✦
+handlerEvents.onlyAdminToUseOnReply=✦━━━━━━━━━━━━━━━━━✦\n☢️ 𝗢𝗻𝗹𝘆 𝗴𝗿𝗼𝘂𝗽 𝗮𝗱𝗺𝗶𝗻𝘀 𝗰𝗮𝗻 𝘂𝘀𝗲 𝗿𝗲𝗽𝗹𝘆 𝗳𝘂𝗻𝗰𝘁𝗶𝗼𝗻 𝗼𝗳 "𝗰𝗺𝗱: %1"\n✦━━━━━━━━━━━━━━━━━✦
+handlerEvents.onlyAdminToUseOnReaction=✦━━━━━━━━━━━━━━━━━✦\n✅ 𝗢𝗻𝗹𝘆 𝗴𝗿𝗼𝘂𝗽 𝗮𝗱𝗺𝗶𝗻𝘀 𝗰𝗮𝗻 𝘂𝘀𝗲 𝗿𝗲𝗮𝗰𝘁𝗶𝗼𝗻 𝗳𝘂𝗻𝗰𝘁𝗶𝗼𝗻 𝗼𝗳 "𝗰𝗺𝗱: %1"\n✦━━━━━━━━━━━━━━━━━✦
+handlerEvents.onlyAdminBot2=✦━━━━━━━━━━━━━━━━━✦\n🔐 𝗢𝗻𝗹𝘆 𝗯𝗼𝘁 𝗮𝗱𝗺𝗶𝗻𝘀 𝗰𝗮𝗻 𝘂𝘀𝗲 "𝗰𝗺𝗱: %1"
+handlerEvents.onlyAdminBot2ToUseOnReply=✦━━━━━━━━━━━━━━━━━✦\n📛 𝗢𝗻𝗹𝘆 𝗯𝗼𝘁 𝗮𝗱𝗺𝗶𝗻𝘀 𝗰𝗮𝗻 𝘂𝘀𝗲 𝗿𝗲𝗽𝗹𝘆 𝗳𝘂𝗻𝗰𝘁𝗶𝗼𝗻 𝗼𝗳 "𝗰𝗺𝗱: %1"\n✦━━━━━━━━━━━━━━━━━✦
+handlerEvents.onlyAdminBot2ToUseOnReaction=✦━━━━━━━━━━━━━━━━━✦\n🔄 𝗢𝗻𝗹𝘆 𝗯𝗼𝘁 𝗮𝗱𝗺𝗶𝗻𝘀 𝗰𝗮𝗻 𝘂𝘀𝗲 𝗿𝗲𝗮𝗰𝘁𝗶𝗼𝗻 𝗳𝘂𝗻𝗰𝘁𝗶𝗼𝗻 𝗼𝗳 "𝗰𝗺𝗱: %1"\n✦━━━━━━━━━━━━━━━━━✦
+handlerEvents.waitingForCommand=✦━━━━━━━━━━━━━━━━━✦\n🔄 𝗢𝗻𝗹𝘆 𝗴𝗿𝗼𝘂𝗽 𝗮𝗱𝗺𝗶𝗻𝘀 𝗰𝗮𝗻 𝘂𝘀𝗲 𝗿𝗲𝗮𝗰𝘁𝗶𝗼𝗻 𝗳𝘂𝗻𝗰𝘁𝗶𝗼𝗻 𝗼𝗳 "𝗰𝗺𝗱: %1"\n✦━━━━━━━━━━━━━━━━━✦
+handlerEvents.errorOccurred=✦━━━━━━━━━━━━━━━━━✦\n🔐 𝗢𝗻𝗹𝘆 𝗯𝗼𝘁 𝗮𝗱𝗺𝗶𝗻𝘀 𝗰𝗮𝗻 𝘂𝘀𝗲 "𝗰𝗺𝗱: %1"
+handlerEvents.errorOccurred2=✦━━━━━━━━━━━━━━━━━✦\n🔁 𝗢𝗻𝗹𝘆 𝗯𝗼𝘁 𝗮𝗱𝗺𝗶𝗻𝘀 𝗰𝗮𝗻 𝘂𝘀𝗲 𝗿𝗲𝗽𝗹𝘆 𝗳𝘂𝗻𝗰𝘁𝗶𝗼𝗻 𝗼𝗳 "𝗰𝗺𝗱: %1"\n✦━━━━━━━━━━━━━━━━━✦
+handlerEvents.errorOccurred3=✦━━━━━━━━━━━━━━━━━✦\n🔄 𝗢𝗻𝗹𝘆 𝗯𝗼𝘁 𝗮𝗱𝗺𝗶𝗻𝘀 𝗰𝗮𝗻 𝘂𝘀𝗲 𝗿𝗲𝗮𝗰𝘁𝗶𝗼𝗻 𝗳𝘂𝗻𝗰𝘁𝗶𝗼𝗻 𝗼𝗳 "𝗰𝗺𝗱: %1"\n✦━━━━━━━━━━━━━━━━━✦
+handlerEvents.errorOccurred4=✦━━━━━━━━━━━━━━━━━✦\n⏳ 𝗣𝗹𝗲𝗮𝘀𝗲 𝘄𝗮𝗶𝘁 %1𝘀 𝗯𝗲𝗳𝗼𝗿𝗲 𝘂𝘀𝗶𝗻𝗴 𝘁𝗵𝗶𝘀 𝗰𝗼𝗺𝗺𝗮𝗻𝗱 𝗮𝗴𝗮𝗶𝗻.\n✦━━━━━━━━━━━━━━━━━✦
+handlerEvents.errorOccurred5=✦━━━━━━━━━━━━━━━━━✦\n💥 [ 𝗘𝗥𝗥𝗢𝗥: %1 ]\n𝗘𝗿𝗿𝗼𝗿 𝗶𝗻 𝗰𝗼𝗺𝗺𝗮𝗻𝗱 "𝗰𝗺𝗱: %2"\n\n📄 %3\n✦━━━━━━━━━━━━━━━━━✦
+handlerEvents.errorOccurred6=✦━━━━━━━━━━━━━━━━━✦\n💥 [ 𝗘𝗥𝗥𝗢𝗥: %1 ]\n𝗢𝗻𝗖𝗵𝗮𝘁 𝗲𝗿𝗿𝗼𝗿 𝗶𝗻 "𝗰𝗺𝗱: %2"\n\n📄 %3\n✦━━━━━━━━━━━━━━━━━✦
+handlerEvents.errorOccurred3=✦━━━━━━━━━━━━━━━━━✦\n💥 [ 𝗘𝗥𝗥𝗢𝗥: %1 ]\n𝗢𝗻𝗥𝗲𝗽𝗹𝘆 𝗲𝗿𝗿𝗼𝗿 𝗶𝗻 "𝗰𝗺𝗱: %2"\n\n📄 %3\n✦━━━━━━━━━━━━━━━━━✦
+handlerEvents.errorOccurred4=✦━━━━━━━━━━━━━━━━━✦\n💥 [ 𝗘𝗥𝗥𝗢𝗥: %1 ]\n𝗢𝗻𝗥𝗲𝗮𝗰𝘁𝗶𝗼𝗻 𝗲𝗿𝗿𝗼𝗿 𝗶𝗻 "𝗰𝗺𝗱: %2"\n\n📄 %3\n✦━━━━━━━━━━━━━━━━━✦
+handlerEvents.errorOccurred5=✦━━━━━━━━━━━━━━━━━✦\n💥 [ 𝗘𝗥𝗥𝗢𝗥: %1 ]\n𝗢𝗻𝗘𝘃𝗲𝗻𝘁 𝗲𝗿𝗿𝗼𝗿 𝗶𝗻 "𝗰𝗺𝗱: %2"\n\n📄 %3\n✦━━━━━━━━━━━━━━━━━✦
+handlerEvents.errorOccurred6=✦━━━━━━━━━━━━━━━━━✦\n💥 [ 𝗘𝗥𝗥𝗢𝗥: %1 ]\n𝗢𝗻𝗘𝘃𝗲𝗻𝘁 𝗲𝗿𝗿𝗼𝗿 𝗶𝗻 "𝗰𝗺𝗱: %2"\n\n📄 %3\n✦━━━━━━━━━━━━━━━━━✦
+handlerEvents.errorOccurred7=✦━━━━━━━━━━━━━━━━━✦\n💥 [ 𝗘𝗥𝗥𝗢𝗥: %1 ]\n𝗢𝗻𝗔𝗻𝘆𝗘𝘃𝗲𝗻𝘁 𝗲𝗿𝗿𝗼𝗿 𝗶𝗻 "𝗰𝗺𝗱: %2"\n\n📄 %3\n✦━━━━━━━━━━━━━━━━━✦
+handlerEvents.cannotFindCommandName=✦━━━━━━━━━━━━━━━━━✦\n❌ 𝗖𝗮𝗻𝗻𝗼𝘁 𝗳𝗶𝗻𝗱 𝗰𝗼𝗺𝗺𝗮𝗻𝗱 𝗻𝗮𝗺𝗲 𝘁𝗼 𝗿𝘂𝗻 𝗿𝗲𝗽𝗹𝘆!\n✦━━━━━━━━━━━━━━━━━✦
+handlerEvents.cannotFindCommand=✦━━━━━━━━━━━━━━━━━✦\n❌ 𝗖𝗮𝗻𝗻𝗼𝘁 𝗳𝗶𝗻𝗱 𝗰𝗼𝗺𝗺𝗮𝗻𝗱 "𝗰𝗺𝗱: %1" 𝘁𝗼 𝗲𝘅𝗲𝗰𝘂𝘁𝗲 𝘁𝗵𝗶𝘀 𝗿𝗲𝗽𝗹𝘆!\n✦━━━━━━━━━━━━━━━━━✦
 
 # bot/autoUptime.js
 autoUptime.autoUptimeTurnedOn=AutoUptime mode turned on
