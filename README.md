@@ -1,46 +1,49 @@
-<img width="1080" height="1350" alt="Image" src="https://github.com/user-attachments/assets/655a3f32-1cf6-4dc7-9595-e34cb2969399" />
+# Hi there, I'm ![Azad](https://img.shields.io/badge/Azad-👋-ff69b4?style=for-the-badge)  
+# With ![Nezuko Chan](https://img.shields.io/badge/Nezuko%20Chan-🥰-ffb6c1?style=for-the-badge)
 
-![Image](https://github.com/user-attachments/assets/2097146f-db6c-4f9a-baee-e67eebad7259)
+![Visitor Count](https://komarev.com/ghpvc/?username=Azad&color=blueviolet)
 
-<div align="center">
-  
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=28&pause=1000&color=F700FF&center=true&vCenter=true&width=435&lines=🐐+Goat+Bot+V2+by+𝑨𝒛𝒂𝒅+𝑽𝒂𝒊+💠" alt="Typing SVG" />
-  
-  <br/>
-  <img src="https://img.shields.io/badge/Made%20by-%F0%9D%91%AC%F0%9D%92%8A%F0%9D%92%82%F0%9D%92%80%F0%9D%91%BA%20%F0%9D%91%BD%F0%9D%92%96%F0%9D%92%82-lightblue?style=for-the-badge&logo=goat&logoColor=white"/>
-  <br/><br/>
+## 👤 About Me
+I'm a student passionate about JavaScript and coding.  
+Just a normal person every day trying to find a better version of myself.  
+Collaborating with Nezuko Chan 🚀
 
-  <img src="https://img.shields.io/badge/VERSION-2.0-blueviolet?style=flat-square" />
-  <img src="https://img.shields.io/badge/OWNER-Azad_Vai-red?style=flat-square" />
-  <img src="https://img.shields.io/badge/STATUS-ACTIVE-brightgreen?style=flat-square" />
+## 🛠️ Top Skills
 
-</div>
-
----
-
-# 🐐 Goat Bot V2
-
-**Goat Bot V2** is a powerful and customizable Facebook Messenger chatbot, proudly developed by `𝑨𝒛𝒂𝒅 𝑽𝒂𝒊 💠`. It comes with modern features for group fun, system tools, automation, and much more.
+**JavaScript:** 🟩🟩🟩🟩🟩🟩🟩🟩⬜⬜ 80%  
+**Node.js:** 🟩🟩🟩🟩🟩🟩🟩⬜⬜⬜ 70%  
+**HTML & CSS:** 🟩🟩🟩🟩🟩🟩🟩🟩🟩⬜ 90%  
+**React.js:** 🟨🟨🟨🟨🟨🟨⬜⬜⬜⬜ 60%  
+**Git & GitHub:** 🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩 100%
 
 ---
 
-## 🔥 Features
+## 📊 GitHub Overview
 
-- ✅ 200+ Ready Commands
-- 🧠 AI Integration (OpenAI / GPT)
-- 🎮 Games, Anime, Tools, Fun & Admin Features
-- ⚙️ Owner-only Control Panel
-- 🖼️ Stylish Image-Based Commands (Rank, Pair, Uptime)
-- 💬 Auto-reply, Keyword System, Vibe Reactions
-- 📁 Category-wise Help Menu
-- 🔄 Dynamic Reload & Config System
+<p align="center">
 
----
+**GitHub:** [Azad-bot-v3](https://github.com/Azad-bot-v3/Bot-v3)  
 
-## 🚀 How to Run
+**Followers:** ![GitHub Followers](https://img.shields.io/github/followers/Azad?style=for-the-badge&labelColor=blueviolet&logo=github&logoColor=white)  
 
-### 1. Install Node.js (v16 or higher)
+**Stars:** ![GitHub Stars](https://img.shields.io/github/stars/Azad?style=for-the-badge&labelColor=green&logo=github&logoColor=white)  
 
-**Linux (Ubuntu):**
-```bash
-sudo apt update && sudo apt install nodejs npm
+**Status (Streak):** ![GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=Azad&theme=react)  
+
+**Top Languages:**  
+![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Azad&layout=compact&theme=react)
+
+**Contribution Graph:**  
+<img src="https://github.com/Platane/snk/raw/output/github-contribution-grid-snake.svg" alt="GitHub Contribution Graph" width="700"/>
+
+</p>
+
+## 🌐 Connect with Me
+<p align="center">
+  <a href="https://github.com/Azad-bot-v3/Bot-v3">
+    <img src="https://img.shields.io/badge/GitHub-Azad-bot-v3-181717?style=for-the-badge&logo=github&logoColor=white"/>
+  </a>
+  <a href="https://www.facebook.com/profile.php?id=61578365162382">
+    <img src="https://img.shields.io/badge/Facebook-Azad-1877F2?style=for-the-badge&logo=facebook&logoColor=white"/>
+  </a>
+</p>
