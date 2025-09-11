@@ -36,13 +36,13 @@ module.exports = {
                 + "\n ♔︎ 𝑂𝑊𝑁𝐸𝑅 ♔︎:https://www.facebook.com/profile.php?id=61578365162382"
                 + "\n |︵✰[_🪽°𝙉𝙚𝙯𝙪𝙠𝙤 𝘾𝙝𝙖𝙣°🐰_]࿐|",
             noAdmin: "⚠️ | No admins found!",
-            added: "✅ | Added admin role for %1 users:\n%2",
+            added: "✅ | 𝐀𝐝𝐝𝐞𝐝 𝐚𝐝𝐦𝐢𝐧 𝐫𝐨𝐥𝐞 𝐟𝐨𝐫 %𝟏 𝐮𝐬𝐞𝐫𝐬:\𝐧%𝟐",
             alreadyAdmin: "\n⚠️ | %1 users already have admin role:\n%2",
-            missingIdAdd: "⚠️ | Please provide an ID, tag a user, or reply to a message to add admin role",
-            removed: "✅ | Removed admin role from %1 users:\n%2",
+            missingIdAdd: "⚠️ | 𝙋𝙡𝙚𝙖𝙨𝙚 𝙥𝙧𝙤𝙫𝙞𝙙𝙚 𝙖𝙣 𝙄𝘿, 𝙩𝙖𝙜 𝙖 𝙪𝙨𝙚𝙧, 𝙤𝙧 𝙧𝙚𝙥𝙡𝙮 𝙩𝙤 𝙖 𝙢𝙚𝙨𝙨𝙖𝙜𝙚 𝙩𝙤 𝙖𝙙𝙙 𝙖𝙙𝙢𝙞𝙣 𝙧𝙤𝙡𝙚",
+            removed: "✅ | 𝙍𝙚𝙢𝙤𝙫𝙚𝙙 𝙖𝙙𝙢𝙞𝙣 𝙧𝙤𝙡𝙚 𝙛𝙧𝙤𝙢 %1 𝙪𝙨𝙚𝙧𝙨:\𝙣%2",
             notAdmin: "⚠️ | %1 users do not have admin role:\n%2",
-            missingIdRemove: "⚠️ | Please provide an ID, tag a user, or reply to a message to remove admin role",
-            notAllowed: "⛔ | You don't have permission to use this command!"
+            missingIdRemove: "⚠️ | 𝙋𝙡𝙚𝙖𝙨𝙚 𝙥𝙧𝙤𝙫𝙞𝙙𝙚 𝙖𝙣 𝙄𝘿, 𝙩𝙖𝙜 𝙖 𝙪𝙨𝙚𝙧, 𝙤𝙧 𝙧𝙚𝙥𝙡𝙮 𝙩𝙤 𝙖 𝙢𝙚𝙨𝙨𝙖𝙜𝙚 𝙩𝙤 𝙧𝙚𝙢𝙤𝙫𝙚 𝙖𝙙𝙢𝙞𝙣 𝙧𝙤𝙡𝙚",
+            notAllowed: "⛔ | 𝙔𝙤𝙪 𝙙𝙤𝙣'𝙩 𝙝𝙖𝙫𝙚 𝙥𝙚𝙧𝙢𝙞𝙨𝙨𝙞𝙤𝙣 𝙩𝙤 𝙪𝙨𝙚 𝙩𝙝𝙞𝙨 𝙘𝙤𝙢𝙢𝙖𝙣𝙙!"
         }
     },
 
