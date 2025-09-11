@@ -1,8 +1,8 @@
 /**
-@author NTKhang
-! The source code is written by NTKhang, please don't change the author's name everywhere.
-! Official source code: https://github.com/ntkhang03/Goat-Bot-V2
-*/
+ * @author NTKhang
+ * ! The source code is written by NTKhang, please don't change the author's name everywhere.
+ * ! Official source code: https://github.com/ntkhang03/Goat-Bot-V2
+ */
 
 const { spawn } = require("child_process");
 const log = require("./logger/log.js");
