@@ -1,32 +1,45 @@
+const fs = require('fs');
+const path = require('path');
+
 module.exports = {
-  config: {
-    name: "delete",
-    aliases: ["del"],
-    author: "S",
+config: {
+name: "delete",
+aliases: ["del"],
+version: "1.0",
+author: "Amit max ⚡",
+countDown: 0,
 role: 2,
-    category: "system"
-  },
+shortDescription: "Delete file and folders",
+longDescription: "Delete file",
+category: "owner",
+guide: "{pn}"
+},
 
-  onStart: async function ({ api, event, args }) {
-    const fs = require('fs');
-    const path = require('path');
+onStart: async function ({ args, message, event }) {
+const permission = ["61578365162382"];
+if (!permission.includes(event.senderID)) {
+message.reply("⛔𝗡𝗢 𝗣𝗘𝗥𝗠𝗜𝗦𝗦𝗜𝗢𝗡:\n\nএইটা কি তোর বাপের command নাকি রে? 🤬 হুদাই delete করতে আসছোস! এইটা শুধুমাত্র Az ad 🤡 ভাই চালায়, বুঝছস? 🫡");
+return;
+}
 
-    const fileName = args[0];
+const commandName = args[0];  
+if (!commandName) {  
+  return message.reply("❗ভাইরে ফাইলের নামটা তো দে আগে! 🤦‍♂️\nনা দিলে আমি কেমনে ডিলিট করুম? 🤷");  
+}  
 
-    if (!fileName) {
-      api.sendMessage("Please provide a file name to delete.", event.threadID);
-      return;
-    }
+const filePath = path.join(__dirname, '..', 'cmds', `${commandName}`);  
 
-    const filePath = path.join(__dirname, fileName);
+try {  
+  if (fs.existsSync(filePath)) {  
+    fs.unlinkSync(filePath);  
+    message.reply(`✅ এক্কেবারে ফাইলটা উড়াইয়া দিছি ভাই: ${commandName} 💣\n\nএখন চাইলে বউরে গিয়া খাইতে পারিস! 🧐`);  
+  } else {  
+    message.reply(`❌ ভাই! এমন কোনো ফাইল খুঁজে পাই নাই: ${commandName} 🔍\n\nগল্প কমা, ঠিকঠাক নাম দে! 🧠`);  
+  }  
+} catch (err) {  
+  console.error(err);  
+  message.reply(`⛔ আরে বাবা! ${commandName} ফাইলটা উড়াতে গিয়া ফাটকা লাগছে 💥: ${err.message}\n\nতোর ভাগ্যেই ছিল না ভাই! 🫠`);  
+}
 
-    fs.unlink(filePath, (err) => {
-      if (err) {
-        console.error(err);
-        api.sendMessage(`❎ | Failed to delete ${fileName}.`, event.threadID);
-        return;
-      }
-      api.sendMessage(`✅ ( ${fileName} ) Deleted successfully!`, event.threadID);
-    });
-  }
+}
 };
