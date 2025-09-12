@@ -1,158 +1,84 @@
-const axios = require("axios");
+const { getPrefix } = global.utils;
+const { commands, aliases } = global.GoatBot;
 
-function roleTextToString(role) {
-  switch (role) {
-    case 0: return "🟢 Everyone";
-    case 1: return "🟡 Group Admins";
-    case 2: return "🔴 Bot Admins";
-    default: return "❓ Unknown";
-  }
-}
-
-// Category emoji map
-const categoryIcons = {
-  info: "📚",
-  system: "⚙️",
-  admin: "🛡️",
-  fun: "🎮",
-  games: "🎲",
-  economy: "💰",
-  media: "🎬",
-  ai: "🤖",
-  owner: "👑",
-  misc: "✨",
-  uncategorized: "📦"
-};
+// Image rotation state
+let imageIndex = 0; // keeps track of which image to show next
+const images = [
+  "https://i.imgur.com/FqD68L9.jpeg",
+  "https://i.imgur.com/y6Ktrjk.jpeg",
+  "https://i.imgur.com/s1z38No.jpg", // .jpe converted to .jpg
+  "https://i.imgur.com/VSxxpm3.jpeg"
+];
 
 module.exports = {
   config: {
     name: "help",
-    aliases: ["use", "cmdl"],
-    version: "2.0",
-    author: "Azad",
+    version: "1.0",
+    author: "𝘼𝙯 𝙖𝙙 👻🩸",
     countDown: 5,
     role: 0,
-    shortDescription: { en: "Sleek & stylish command menu" },
-    longDescription: { en: "Get detailed command usage with modern stylish look" },
-    category: "info",
-    guide: { en: "{pn} / help cmdName\n{pn} -c <categoryName>" },
-    priority: 1,
+    shortDescription: { en: "Show all command list (Bordered SMS Style)" },
+    longDescription: { en: "Display all commands in a single bordered message" },
+    category: "system",
   },
 
   onStart: async function ({ message, args, event }) {
-    const { threadID } = event;
+    const prefix = getPrefix(event.threadID);
 
-    // 🔹 Azad's FB ID & avatar
-    const ownerUid = "61578365162382"; 
-    let avatarStream = null;
-    try {
-      const response = await axios.get(
-        `https://graph.facebook.com/${ownerUid}/picture?height=300&width=300&access_token=6628568379%7Cc1e620fa708a1d5696fb991c1bde5662`,
-        { responseType: "stream" }
-      );
-      avatarStream = response.data;
-    } catch {
-      avatarStream = null;
+    // Determine which image to show
+    const currentImage = images[imageIndex];
+    imageIndex = (imageIndex + 1) % images.length; // move to next for next help request
+
+    // 🔎 Command specific help
+    if (args[0]) {
+      const cmdName = args[0].toLowerCase();
+      const command = commands.get(cmdName) || commands.get(aliases.get(cmdName));
+      if (!command) return message.reply(`💀👻 No such command: ${cmdName}`);
+
+      const singleMsg = `╔═══════════════════════╗
+💀 𝘾𝙤𝙢𝙢𝙖𝙣𝙙: ${command.config.name} ⚔️
+📜 𝘿𝙚𝙨𝙘𝙧𝙞𝙥𝙩𝙞𝙤𝙣: ${command.config.shortDescription?.en || "No description"} 
+🔥 𝙑𝙚𝙧𝙨𝙞𝙤𝙣: ${command.config.version || "1.0"} 
+👤 𝘼𝙪𝙩𝙝𝙤𝙧: ${command.config.author || "Unknown"} 
+🔑 𝙍𝙤𝙡𝙚: ${command.config.role || 0} 
+⏳ 𝘾𝙤𝙤𝙡𝙙𝙤𝙬𝙣: ${command.config.countDown || 5}s
+╚═══════════════════════╝`;
+
+      return message.reply({
+        body: singleMsg,
+        attachment: await global.utils.getStreamFromURL(currentImage)
+      });
     }
 
-    // fallback prefix
-    let prefix = "!";
-    try {
-      if (global.utils && typeof global.utils.getPrefix === "function") {
-        prefix = global.utils.getPrefix(threadID) || "!";
-      }
-    } catch { prefix = "!"; }
-
-    const commands = global.GoatBot?.commands;
-    const aliases = global.GoatBot?.aliases;
-
-    if (!commands || !aliases) return await message.reply("❌ Commands are not loaded yet.");
-
-    // ----- Full Help Menu -----
-    if (!args.length) {
-      let msg = `╔════════════════════════════╗
-︵✰[_🪽°𝙉𝙚𝙯𝙪𝙠𝙤 𝘾𝙝𝙖𝙣°🐰_]࿐ — 𝗛𝗘𝗟𝗣 𝗠𝗘𝗡𝗨 ✨
-╚════════════════════════════╝\n`;
-
-      const categories = {};
-      for (const [name, cmd] of commands) {
-        // ✅ Remove role filter — show all commands
-        const cat = (cmd.config.category || "Uncategorized").toLowerCase();
-        categories[cat] = categories[cat] || [];
-        categories[cat].push(name);
-      }
-
-      const sortedCats = Object.keys(categories).sort();
-      for (const cat of sortedCats) {
-        const icon = categoryIcons[cat] || "📦";
-        msg += `\n╭─ ${icon} ${cat.toUpperCase()} ─────────╮\n`;
-        categories[cat].sort().forEach(c => msg += `│ 🔹 ${c}\n`);
-        msg += `╰─────────────────────────╯\n`;
-      }
-
-      msg += `\n📌 Total Commands: ${commands.size}
-💡 Usage: ${prefix}help <command>
-👑 Owner: 🅰🆉🅰🅳
-🔗 FB: facebook.com/profile.php?id=${ownerUid}\n`;
-
-      return await message.reply({ body: msg, attachment: avatarStream ? [avatarStream] : [] });
+    // 📚 Full help list
+    const categories = {};
+    for (const [name, cmd] of commands) {
+      const cat = cmd.config.category || "Uncategorized";
+      if (!categories[cat]) categories[cat] = [];
+      categories[cat].push(name);
     }
 
-    // ----- Category Help -----
-    else if (args[0] === "-c") {
-      if (!args[1]) return await message.reply("❗ Please specify a category.");
+    let msg = `╔════════════════════════════════╗
+⚔️ ︵✰[🪽°𝙉𝙚𝙯𝙪𝙠𝙤 𝘾𝙝𝙖𝙣°🐰]࿐ 👻🩸
+𝙥𝙧𝙚𝙛𝙞𝙭: ${prefix}
+╚════════════════════════════════╝\n`;
 
-      const categoryName = args[1].toLowerCase();
-      const filtered = Array.from(commands.values()).filter(
-        cmd => (cmd.config.category || "").toLowerCase() === categoryName
-      );
-      if (!filtered.length) return await message.reply(`❌ No commands in "${categoryName}"`);
-
-      const icon = categoryIcons[categoryName] || "📦";
-      let msg = `╔════════════════════╗
-📂 ${icon} ${categoryName.toUpperCase()} COMMANDS
-╚════════════════════╝\n`;
-
-      filtered.sort((a,b)=>a.config.name.localeCompare(b.config.name))
-              .forEach(cmd => msg += `│ 🔹 ${cmd.config.name}\n`);
-      msg += `╰────────────────────╯`;
-
-      return await message.reply({ body: msg, attachment: avatarStream ? [avatarStream] : [] });
+    for (const category of Object.keys(categories).sort()) {
+      const cmds = categories[category].sort();
+      msg += `╔─ ${category.toUpperCase()} ─╗\n`;
+      msg += cmds.join('  ') + '\n';
+      msg += `╚────────────────────────────╝\n`;
     }
 
-    // ----- Command Details -----
-    else {
-      const commandName = args[0].toLowerCase();
-      const alias = aliases.get(commandName);
-      const command = commands.get(commandName) || (alias && commands.get(alias));
-      if (!command) return await message.reply(`❌ Command "${commandName}" not found.`);
+    msg += `╔════════════════════════════════╗
+🔰 𝙏𝙤𝙩𝙖𝙡 𝘾𝙤𝙢𝙢𝙖𝙣𝙙𝙨: ${commands.size}
+♻️ 𝙥𝙧𝙚𝙛𝙞𝙭: ${prefix}
+👤   𝘿𝙚𝙫:  𝘼𝙯 𝙖𝙙
+╚════════════════════════════════╝`;
 
-      const cfg = command.config;
-      const usage = (cfg.guide?.en || "No guide")
-        .replace(/{p}/g, prefix)
-        .replace(/{n}/g, cfg.name);
-
-      const msg = `╔══════════════════════════════╗
-🌟 COMMAND: ${cfg.name.toUpperCase()}
-╚══════════════════════════════╝
-
-📌 Description: ${cfg.longDescription?.en || "No description"}
-🛠 Aliases: ${cfg.aliases?.length ? cfg.aliases.join(", ") : "None"}
-⚡ Version: ${cfg.version || "1.0"}
-👤 Role: ${roleTextToString(cfg.role)}
-⏱ Cooldown: ${cfg.countDown || 1}s
-✍️ Author: ${cfg.author || "Unknown"}
-
-📖 Usage:
-${usage}
-
-📝 Notes:
-︵✰[_🪽°𝙉𝙚𝙯𝙪𝙠𝙤 𝘾𝙝𝙖𝙣°🐰_]࿐ content cannot be changed
-♕︎ Owner: 🅰🆉🅰🅳 ♕
-
-🔗 FB: facebook.com/profile.php?id=${ownerUid}`;
-
-      return await message.reply({ body: msg, attachment: avatarStream ? [avatarStream] : [] });
-    }
+    await message.reply({
+      body: msg,
+      attachment: await global.utils.getStreamFromURL(currentImage)
+    });
   },
 };
