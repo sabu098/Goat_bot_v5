@@ -2,11 +2,11 @@ const { getPrefix } = global.utils;
 const { commands, aliases } = global.GoatBot;
 
 // Image rotation state
-let imageIndex = 0; // keeps track of which image to show next
+let imageIndex = 0;
 const images = [
   "https://i.imgur.com/FqD68L9.jpeg",
   "https://i.imgur.com/y6Ktrjk.jpeg",
-  "https://i.imgur.com/s1z38No.jpg", // .jpe converted to .jpg
+  "https://i.imgur.com/s1z38No.jpg",
   "https://i.imgur.com/VSxxpm3.jpeg"
 ];
 
@@ -17,32 +17,33 @@ module.exports = {
     author: "𝘼𝙯 𝙖𝙙 👻🩸",
     countDown: 5,
     role: 0,
-    shortDescription: { en: "Show all command list (Bordered SMS Style)" },
-    longDescription: { en: "Display all commands in a single bordered message" },
+    shortDescription: { en: "Show all commands (Stylish SMS Style)" },
+    longDescription: { en: "Display all commands in a stylish bordered list" },
     category: "system",
   },
 
   onStart: async function ({ message, args, event }) {
     const prefix = getPrefix(event.threadID);
 
-    // Determine which image to show
+    // Rotate image
     const currentImage = images[imageIndex];
-    imageIndex = (imageIndex + 1) % images.length; // move to next for next help request
+    imageIndex = (imageIndex + 1) % images.length;
 
-    // 🔎 Command specific help
+    // Command-specific help
     if (args[0]) {
       const cmdName = args[0].toLowerCase();
       const command = commands.get(cmdName) || commands.get(aliases.get(cmdName));
       if (!command) return message.reply(`💀👻 No such command: ${cmdName}`);
 
-      const singleMsg = `╔═══════════════════════╗
-💀 𝘾𝙤𝙢𝙢𝙖𝙣𝙙: ${command.config.name} ⚔️
-📜 𝘿𝙚𝙨𝙘𝙧𝙞𝙥𝙩𝙞𝙤𝙣: ${command.config.shortDescription?.en || "No description"} 
-🔥 𝙑𝙚𝙧𝙨𝙞𝙤𝙣: ${command.config.version || "1.0"} 
-👤 𝘼𝙪𝙩𝙝𝙤𝙧: ${command.config.author || "Unknown"} 
-🔑 𝙍𝙤𝙡𝙚: ${command.config.role || 0} 
-⏳ 𝘾𝙤𝙤𝙡𝙙𝙤𝙬𝙣: ${command.config.countDown || 5}s
-╚═══════════════════════╝`;
+      const aliasList = command.config.aliases?.join(", ") || "None";
+      const singleMsg = `╔════════════════════════╗
+🔥  Command: ${command.config.name} ⚡
+📄  Desc: ${command.config.shortDescription?.en || "No description"}
+🌟  Version: ${command.config.version || "1.0"}
+👤  Author: ${command.config.author || "Unknown"}
+⏱️  Cooldown: ${command.config.countDown || 5}s
+💡  Alias: ${aliasList}
+╚════════════════════════╝`;
 
       return message.reply({
         body: singleMsg,
@@ -50,7 +51,7 @@ module.exports = {
       });
     }
 
-    // 📚 Full help list
+    // All commands in stylish format
     const categories = {};
     for (const [name, cmd] of commands) {
       const cat = cmd.config.category || "Uncategorized";
@@ -58,23 +59,25 @@ module.exports = {
       categories[cat].push(name);
     }
 
-    let msg = `╔════════════════════════════════╗
-⚔️ ︵✰[🪽°𝙉𝙚𝙯𝙪𝙠𝙤 𝘾𝙝𝙖𝙣°🐰]࿐ 👻🩸
-𝙥𝙧𝙚𝙛𝙞𝙭: ${prefix}
-╚════════════════════════════════╝\n`;
+    let msg = `╔════════════════════════╗
+💫  🪽°𝙉𝙚𝙯𝙪𝙠𝙤 𝘾𝙝𝙖𝙣°🐰 ︵✰
+╚════════════════════════╝\n`;
 
     for (const category of Object.keys(categories).sort()) {
-      const cmds = categories[category].sort();
-      msg += `╔─ ${category.toUpperCase()} ─╗\n`;
-      msg += cmds.join('  ') + '\n';
-      msg += `╚────────────────────────────╝\n`;
+      const emoji = "⚡"; // emoji for all categories
+      msg += `┏━━━ ${emoji} ${category.toUpperCase()} ${emoji} ━━━┓\n`;
+      for (const c of categories[category].sort()) {
+        msg += `┃ • ${c}\n`;
+      }
+      msg += `┗━━━━━━━━━━━━━━━━━━━━━━┛\n`;
     }
 
-    msg += `╔════════════════════════════════╗
-🔰 𝙏𝙤𝙩𝙖𝙡 𝘾𝙤𝙢𝙢𝙖𝙣𝙙𝙨: ${commands.size}
-♻️ 𝙥𝙧𝙚𝙛𝙞𝙭: ${prefix}
-👤   𝘿𝙚𝙫:  𝘼𝙯 𝙖𝙙
-╚════════════════════════════════╝`;
+    // Footer
+    msg += `╔════════════════════════╗
+💎 Total Commands: ${commands.size}
+🔰 Prefix: ${prefix}
+👤 Dev: 𝘼𝙯 𝙖𝙙 👻🩸
+╚════════════════════════╝`;
 
     await message.reply({
       body: msg,
