@@ -1,79 +1,67 @@
-const { GoatWrapper } = require("fca-liane-utils");
-
-const cooldowns = new Map(); // Track user cooldowns
-
 module.exports = {
-    config: {
-        name: "unsend",
-        aliases: ["rmv", "u", "uns"],
-        version: "1.4",
-        author: "NTKhang | Azad 💥",
-        countDown: 5, // Cooldown in seconds
-        role: 0,
-        description: {
-            vi: "Gỡ tin nhắn của bot với phong cách attitude",
-            en: "Unsend bot's message with attitude style"
-        },
-        category: "box chat",
-        guide: {
-            vi: "reply tin nhắn muốn gỡ của bot và gọi lệnh {pn}",
-            en: "reply the message you want to unsend and call the command {pn}"
-        }
-    },
+config: {
+name: "unsend",
+aliases: ["un", "u", "uns", "unsent"],
+version: "2.2",
+author: "NTKhang | Azad 💥 ",
+countDown: 5,
+role: 0,
+description: {
+en: "Delete bot messages (works with prefix + no prefix in group)"
+},
+category: "box chat",
+guide: {
+en: "Reply a bot's message and type unsend"
+},
+usePrefix: false
+},
 
-    langs: {
-        vi: {
-            syntaxError: [
-                "Trả lời tin nhắn của bot đi 😏",
-                "Không reply mà cố gắng hả? 🤬",
-                "Cẩn thận nhé, reply trước đi 😎",
-                "Đừng làm trò, reply tin nhắn đã 😤",
-                "Reply đi, đừng làm kẻ ngốc 😹"
-            ],
-            cooldownMsg: (sec) => `Chill! Chờ ${sec} giây trước khi gỡ tiếp 😹`
-        },
-        en: {
-            syntaxError: [
-                "Reply the bot's message first 😏",
-                "Trying without replying? 🤬",
-                "Careful! Reply first 😎",
-                "Don't act smart, reply the message 😤",
-                "Reply first, don’t be silly 😹"
-            ],
-            cooldownMsg: (sec) => `Hold on! Wait ${sec} seconds before unsending again 😹`
-        }
-    },
+// গালি লিস্ট  
+errors: [  
+	"তুই কি মায়ের পেট থেকে বুদ্ধি আনতে ভুলে গেছিস?",  
+	"এত বেকুব কোথা থেকে আসিস রে?",  
+	"গাধা! রিপ্লাই দে আগে, নইলে মাথায় লাথি খাবি!",  
+	"তোরে দিয়ে বট চালানো মানে ছাগলকে গিটার ধরানো!",  
+	"মাথায় গোবর ভরা নাকি তোর?",  
+	"চোখ থাকলে দেখিস না কেন? রিপ্লাই দে!",  
+	"তুই এতটা গেঁয়ো কেন হইলি রে?",  
+	"বোকাচোদা, আগে রিপ্লাই দে তারপর কমান্ড চালা!",  
+	"তোরে দিয়ে কিছু হবে না, হাবলু কাতলা!",  
+	"তোরে মারলে ডিম ফোটার আগেই অমলেট হয়ে যাস।"  
+],  
 
-    onStart: async function ({ message, event, api, getLang, config }) {
-        const userId = event.senderID;
-        const now = Date.now();
+// Helper function: বক্সে টেক্সট পাঠানো  
+boxText(text) {  
+	return `✦━━━━━━━━━━━━━━━━━✦\n${text}\n✦━━━━━━━━━━━━━━━━━✦`;  
+},  
 
-        // Check cooldown
-        if (cooldowns.has(userId)) {
-            const remaining = (cooldowns.get(userId) - now) / 1000;
-            if (remaining > 0) {
-                return await message.reply(getLang("cooldownMsg")(Math.ceil(remaining)));
-            }
-        }
+// Prefix দিয়ে চালালে  
+onStart: async function ({ message, event, api }) {  
+	if (!event.messageReply || !event.messageReply.messageID || event.messageReply.senderID != api.getCurrentUserID()) {  
+		const arr = module.exports.errors;  
+		const randomError = arr[Math.floor(Math.random() * arr.length)];  
+		return message.reply(module.exports.boxText(randomError));  
+	}  
+	await message.unsend(event.messageReply.messageID);  
+	return message.reply(module.exports.boxText("✅ Message unsent successfully!"));  
+},  
 
-        // Update cooldown
-        cooldowns.set(userId, now + config.countDown * 1000);
+// Prefix ছাড়া শুধু গ্রুপে  
+onChat: async function ({ event, message, api }) {  
+	if (!event.isGroup) return;  
 
-        // Check if user replied to a bot message
-        if (!event.messageReply || event.messageReply.senderID != api.getCurrentUserID()) {
-            const lines = getLang("syntaxError");
-            const randomLine = lines[Math.floor(Math.random() * lines.length)];
-            return await message.reply(randomLine);
-        }
+	const body = event.body?.toLowerCase();  
+	if (!body) return;  
 
-        // Attempt to unsend the message
-        try {
-            await message.unsend(event.messageReply.messageID);
-        } catch {
-            return await message.reply("Unable to unsend the message 😾");
-        }
-    }
+	if (["unsend", "un", "u", "uns", "unsent"].includes(body.trim())) {  
+		if (!event.messageReply || !event.messageReply.messageID || event.messageReply.senderID != api.getCurrentUserID()) {  
+			const arr = module.exports.errors;  
+			const randomError = arr[Math.floor(Math.random() * arr.length)];  
+			return message.reply(module.exports.boxText(randomError));  
+		}  
+		await message.unsend(event.messageReply.messageID);  
+		return message.reply(module.exports.boxText("✅ Message unsent successfully!"));  
+	}  
+}
+
 };
-
-const wrapper = new GoatWrapper(module.exports);
-wrapper.applyNoPrefix({ allowPrefix: true });
