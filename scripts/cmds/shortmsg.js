@@ -37,17 +37,17 @@ module.exports = {
       });
     }
 
-    if (text === "intro sajid") {
+    if (text === "intro azad") {
       return message.reply({
         body: `
-Name: Sajid [Admin]
-Class: SSC25  [science]
-Address: Savar
+Name: Azad [Admin]
+Class: 🐿️💨  [😒]
+Address: Chittagong 
 Age: 17
-Blood: O+
-Weight: 50
+Blood: O+ maybe
+Weight: jani na
 Height: 5'9
-Birthday: 11 December 2007
+Birthday: eta abar ki 🐿️💨
 𝙎𝙞𝙣𝙜𝙡𝙚 𝙑𝙞𝙧𝙜𝙞𝙣 𝙪𝙡𝙩𝙧𝙖 𝙥𝙧𝙤 𝙢𝙖𝙭`,
         attachment: await global.utils.getStreamFromURL("https://i.imgur.com/DV2iCBd.jpeg")
       });
@@ -95,16 +95,16 @@ Birthday: 11 December 2007
       });
     }
 
-    if (text === "hasan") {
+    if (text === "Azad") {
       return message.reply({
         body: `
 ~ Ore dako kno !? ummmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmaaaaaaaaaaaaaaaaaaahhhhhhhhh 😘💋👀`,
       });
     }
-    if (text === "toxic") {
+    if (text === "Nezuko") {
       return message.reply({
         body: `
- Yes!? i am the lord of toxic 💀✌️`,
+ Yes!? i am the lord of nezuko 💀✌️`,
       });
     }
     if (text === "hi") {
