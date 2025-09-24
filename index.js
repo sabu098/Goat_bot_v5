@@ -1,55 +1,48 @@
 /**
  * @author NTKhang
- * ! Goat-Bot-V2 main file
- * ! Auto-detects Render environment for 24/7 operation
+ * ! The source code is written by NTKhang, please don't change the author's name everywhere. Thank you for using
+ * ! Official source code: https://github.com/ntkhang03/Goat-Bot-V2
+ * ! If you do not download the source code from the above address, you are using an unknown version and at risk of having your account hacked
+ *
+ * English:
+ * ! Please do not change the below code, it is very important for the project.
+ * It is my motivation to maintain and develop the project for free.
+ * ! If you change it, you will be banned forever
+ * Thank you for using
+ *
+ * Vietnamese:
+ * ! Vui lòng không thay đổi mã bên dưới, nó rất quan trọng đối với dự án.
+ * Nó là động lực để tôi duy trì và phát triển dự án miễn phí.
+ * ! Nếu thay đổi nó, bạn sẽ bị cấm vĩnh viễn
+ * Cảm ơn bạn đã sử dụng
  */
 
 const { spawn } = require("child_process");
 const log = require("./logger/log.js");
-const http = require("http");
 
-const isWebService = !!process.env.PORT; // true if PORT exists → Web Service
-
-// ===== Function to start the bot =====
 function startProject() {
-    const child = spawn("node", ["Goat.js"], {
-        cwd: __dirname,
-        stdio: "inherit",
-        shell: true
-    });
+	const child = spawn("node", ["Goat.js"], {
+		cwd: __dirname,
+		stdio: "inherit",
+		shell: true
+	});
 
-    child.on("close", (code) => {
-        if (code === 2) {
-            log.info("Goat-Bot crashed. Restarting...");
-            startProject();
-        } else if (code !== 0) {
-            log.info(`Goat-Bot exited with code ${code}. Restarting...`);
-            startProject();
-        }
-    });
+	child.on("close", (code) => {
+		if (code == 2) {
+			log.info("Restarting Project...");
+			startProject();
+		}
+	});
 }
 
-// ===== Start the bot =====
 startProject();
+const express = require('express');
+const app = express();
 
-// ===== Keep process alive for Background Worker =====
-if (!isWebService) {
-    process.stdin.resume();
-    log.info("Running as Background Worker (no web port required).");
-} else {
-    // ===== Tiny web server for Web Service =====
-    const port = process.env.PORT || 10000;
+app.get('/', (req, res) => {
+  res.send('Bot is running!');
+});
 
-    http.createServer((req, res) => {
-        res.writeHead(200, { "Content-Type": "text/plain" });
-        res.end("Goat-Bot is running 24/7!\n");
-    }).listen(port, "0.0.0.0", () => {
-        console.log(`Web server running on port ${port}`);
-        log.info("Running as Web Service on Render.");
-    });
-}
-
-// ===== Heartbeat log =====
-setInterval(() => {
-    log.info("Goat-Bot is alive 24/7...");
-}, 3600 * 1000);
+app.listen(3000, () => {
+  console.log('Uptime server running on port 3000');
+});
