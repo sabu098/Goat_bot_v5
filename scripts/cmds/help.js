@@ -1,87 +1,133 @@
 const { getPrefix } = global.utils;
 const { commands, aliases } = global.GoatBot;
 
-// Image rotation state
+// Rotate images for stylish effect
 let imageIndex = 0;
 const images = [
-  "https://i.imgur.com/FqD68L9.jpeg",
-  "https://i.imgur.com/y6Ktrjk.jpeg",
-  "https://i.imgur.com/s1z38No.jpg",
-  "https://i.imgur.com/VSxxpm3.jpeg"
+"https://files.catbox.moe/m77sfn.gif",
+"https://files.catbox.moe/i9etjw.gif",
+"https://i.imgur.com/s1z38No.jpg",
+"https://files.catbox.moe/3fp3vf.gif"
 ];
 
+// Fancy small-caps mapping
+const fancyMap = {
+a: 'ᴀ', b: 'ʙ', c: 'ᴄ', d: 'ᴅ', e: 'ᴇ', f: 'ꜰ', g: 'ɢ', h: 'ʜ', i: 'ɪ',
+j: 'ᴊ', k: 'ᴋ', l: 'ʟ', m: 'ᴍ', n: 'ɴ', o: 'ᴏ', p: 'ᴘ', q: 'ǫ', r: 'ʀ',
+s: 'ꜱ', t: 'ᴛ', u: 'ᴜ', v: 'ᴠ', w: 'ᴡ', x: 'ˣ', y: 'ʏ', z: 'ᴢ'
+};
+
+// Convert normal string to fancy small-caps
+function toFancySmallCaps(str) {
+return str.split("").map(c => fancyMap[c.toLowerCase()] || c).join("");
+}
+
+// 🔓 Role text helper
+function roleTextToString(role) {
+switch (role) {
+case 0: return "Everyone";
+case 1: return "Group Admin";
+case 2: return "Bot Admin";
+case 3: return "Super Admin";
+default: return role.toString();
+}
+}
+
 module.exports = {
-  config: {
-    name: "help",
-    version: "1.0",
-    author: "𝘼𝙯 𝙖𝙙 👻🩸",
-    countDown: 5,
-    role: 0,
-    shortDescription: { en: "Show all commands (Stylish SMS Style)" },
-    longDescription: { en: "Display all commands in a stylish bordered list" },
-    category: "system",
-  },
+config: {
+name: "help",
+version: "1.0",
+author: "Az ad 💥",
+countDown: 5,
+role: 0,
+shortDescription: { en: "Show all commands (Stylish SMS Style)" },
+longDescription: { en: "Display all commands in a stylish bordered list" },
+category: "system"
+},
 
-  onStart: async function ({ message, args, event }) {
-    const prefix = getPrefix(event.threadID);
+onStart: async function ({ message, args, event }) {
+const prefix = getPrefix(event.threadID);
 
-    // Rotate image
-    const currentImage = images[imageIndex];
-    imageIndex = (imageIndex + 1) % images.length;
+// Rotate image      
+const currentImage = images[imageIndex];      
+imageIndex = (imageIndex + 1) % images.length;  
 
-    // Command-specific help
-    if (args[0]) {
-      const cmdName = args[0].toLowerCase();
-      const command = commands.get(cmdName) || commands.get(aliases.get(cmdName));
-      if (!command) return message.reply(`💀👻 No such command: ${cmdName}`);
+// Command-specific info      
+if (args[0]) {      
+  const cmdName = args[0].toLowerCase();      
+  const aliasTarget = aliases.get(cmdName);    
+  const command = commands.get(cmdName) || (aliasTarget && commands.get(aliasTarget));    
+  if (!command) return message.reply(`💀👻 No such command: ${cmdName}`);      
 
-      const aliasList = command.config.aliases?.join(", ") || "None";
-      const singleMsg = `╔════════════════════════╗
-🔥  Command: ${command.config.name} ⚡
-📄  Desc: ${command.config.shortDescription?.en || "No description"}
-🌟  Version: ${command.config.version || "1.0"}
-👤  Author: ${command.config.author || "Unknown"}
-⏱️  Cooldown: ${command.config.countDown || 5}s
-💡  Alias: ${aliasList}
-╚════════════════════════╝`;
+  const { name, author, shortDescription, version, role } = command.config;      
+  const desc = shortDescription?.en || "No description";      
+  const usage = `Use: ${prefix}${name}`;      
+  const infoBox = `╭───⊙
 
-      return message.reply({
-        body: singleMsg,
-        attachment: await global.utils.getStreamFromURL(currentImage)
-      });
-    }
+│ ☢️ ${toFancySmallCaps(name)}
+├── INFO
+│ 📝 Description: ${desc}
+│ 🗿 Author: ${author || "Unknown"}
+│ ⚙️ Guide: ${usage}
+├── USAGE
+│ 💠 Version: ${version || "1.0"}
+│ 🔐 Role: ${roleTextToString(role)}
+╰────────────⊙`;
 
-    // All commands in stylish format
-    const categories = {};
-    for (const [name, cmd] of commands) {
-      const cat = cmd.config.category || "Uncategorized";
-      if (!categories[cat]) categories[cat] = [];
-      categories[cat].push(name);
-    }
+return message.reply({      
+    body: infoBox,      
+    attachment: await global.utils.getStreamFromURL(currentImage)      
+  });      
+}      
 
-    let msg = `╔════════════════════════╗
-💫  🪽°𝙉𝙚𝙯𝙪𝙠𝙤 𝘾𝙝𝙖𝙣°🐰 ︵✰
+// Categorize commands      
+const categories = {};      
+for (const [name, cmd] of commands) {      
+  const cat = cmd.config.category || "Uncategorized";      
+  if (!categories[cat]) categories[cat] = [];      
+  categories[cat].push(name);      
+}      
+
+// Nezuko header with sparkles      
+const sparkles = ["✦", "✧", "✰"];      
+const randSparkle = () => sparkles[Math.floor(Math.random() * sparkles.length)];      
+let msg = `╔════════════════════════╗
+
+💫  🪽°${toFancySmallCaps("Nezuko Chan")}°🐰 ${randSparkle()} ${randSparkle()} ${randSparkle()}
 ╚════════════════════════╝\n`;
 
-    for (const category of Object.keys(categories).sort()) {
-      const emoji = "⚡"; // emoji for all categories
-      msg += `┏━━━ ${emoji} ${category.toUpperCase()} ${emoji} ━━━┓\n`;
-      for (const c of categories[category].sort()) {
-        msg += `┃ • ${c}\n`;
-      }
-      msg += `┗━━━━━━━━━━━━━━━━━━━━━━┛\n`;
-    }
+// List commands by category      
+const maxCategoryLength = Math.max(...Object.values(categories).map(c => c.length), 1);    
+for (const category of Object.keys(categories).sort()) {      
+  const cmds = categories[category].sort();      
+  const barLength = 10;      
+  const filled = Math.min(barLength, Math.ceil((cmds.length / maxCategoryLength) * barLength));      
+  const empty = barLength - filled;      
+  const bar = `➪${"▮".repeat(filled)}${"▭".repeat(empty)}৺`;      
 
-    // Footer
-    msg += `╔════════════════════════╗
+  msg += `\n╭─🌈 ${toFancySmallCaps("Category")}: ${toFancySmallCaps(category)} ─╮\n`;      
+  msg += `${bar}\n`;      
+  const bullets = ["〄", "✦", "💥", "🧬"];      
+  cmds.forEach((c, i) => {      
+    const bullet = bullets[i % bullets.length];      
+    msg += `   ${bullet} ${toFancySmallCaps(c)}\n`;      
+  });      
+  msg += `╰${"─".repeat(36)}╯\n`;      
+}      
+
+// Footer with total commands, prefix, and dev info      
+msg += `\n╔════════════════════════════╗
+
 💎 Total Commands: ${commands.size}
 🔰 Prefix: ${prefix}
-👤 Dev: 𝘼𝙯 𝙖𝙙 👻🩸
-╚════════════════════════╝`;
+👤 Dev: Az ad 👻🩸
+💡 Tip: Type '${prefix}help [command]' for detailed info.
+╚════════════════════════════╝`;
 
-    await message.reply({
-      body: msg,
-      attachment: await global.utils.getStreamFromURL(currentImage)
-    });
-  },
+await message.reply({      
+  body: msg,      
+  attachment: await global.utils.getStreamFromURL(currentImage)      
+});
+
+}
 };
