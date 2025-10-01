@@ -1,61 +1,46 @@
-/**
-
-@author NTKhang
-
-! Goat-Bot-V2 main file
-
-! Auto-detects Render environment for 24/7 operation
-*/
-
-
+require("dotenv").config(); // load .env variables
 const { spawn } = require("child_process");
 const log = require("./logger/log.js");
 const http = require("http");
 
-const isWebService = !!process.env.PORT; // true if PORT exists → Web Service
+const isWebService = !!process.env.PORT;
 
-// ===== Function to start the bot =====
+let crashCount = 0;
+const MAX_CRASHES = 5;
+
 function startProject() {
-const child = spawn("node", ["Goat.js"], {
-cwd: __dirname,
-stdio: "inherit",
-shell: true
-});
+  const child = spawn("node", ["Goat.js"], {
+    cwd: __dirname,
+    stdio: "inherit",
+    shell: true
+  });
 
-child.on("close", (code) => {  
-    if (code === 2) {  
-        log.info("Goat-Bot crashed. Restarting...");  
-        startProject();  
-    } else if (code !== 0) {  
-        log.info(`Goat-Bot exited with code ${code}. Restarting...`);  
-        startProject();  
-    }  
-});
-
+  child.on("close", (code) => {
+    crashCount++;
+    if (crashCount > MAX_CRASHES) {
+      log.error(`Goat-Bot crashed ${crashCount} times. Stopping auto-restart.`);
+      return;
+    }
+    log.info(`Goat-Bot exited with code ${code}. Restarting...`);
+    setTimeout(startProject, 5000); // 5 seconds wait
+  });
 }
 
-// ===== Start the bot =====
 startProject();
 
-// ===== Keep process alive for Background Worker =====
 if (!isWebService) {
-process.stdin.resume();
-log.info("Running as Background Worker (no web port required).");
+  process.stdin.resume();
+  log.info("Running as Background Worker (no web port required).");
 } else {
-// ===== Tiny web server for Web Service =====
-const port = process.env.PORT || 10000;
-
-http.createServer((req, res) => {  
-    res.writeHead(200, { "Content-Type": "text/plain" });  
-    res.end("Goat-Bot is running 24/7!\n");  
-}).listen(port, "0.0.0.0", () => {  
-    console.log(`Web server running on port ${port}`);  
-    log.info("Running as Web Service on Render.");  
-});
-
+  const port = process.env.PORT || 10000;
+  http.createServer((req, res) => {
+    res.writeHead(200, { "Content-Type": "text/plain" });
+    res.end("Goat-Bot is running 24/7!\n");
+  }).listen(port, "0.0.0.0", () => {
+    log.info(`Running as Web Service on port ${port}.`);
+  });
 }
 
-// ===== Heartbeat log =====
 setInterval(() => {
-log.info("Goat-Bot is alive 24/7...");
+  log.info("Goat-Bot is alive 24/7...");
 }, 3600 * 1000);
