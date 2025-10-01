@@ -3,33 +3,25 @@ const path = require("path");
 
 const targetFile = path.join(__dirname, "node_modules/priyanshu-fca/src/listenMqtt.js");
 
+// ============================
+// PATCHED CODE START
+// ============================
 const patchedCode = `
-// ================= Patched listenMqtt.js =================
 "use strict";
 
 const mqtt = require("mqtt");
-const HttpsProxyAgent = require("https-proxy-agent");
-
-const proxyUrl = process.env.PROXY_URL || null;
 
 function listenMqtt(client, callback) {
-  const options = {
-    reconnectPeriod: 5000,
-    connectTimeout: 30 * 1000,
+  const mqttClient = mqtt.connect("wss://edge-chat.facebook.com/chat", {
     wsOptions: {
       headers: {
         "User-Agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
       },
     },
-  };
-
-  if (proxyUrl) {
-    console.log("🌐 Using proxy for MQTT:", proxyUrl);
-    options.wsOptions.agent = new HttpsProxyAgent(proxyUrl);
-  }
-
-  const mqttClient = mqtt.connect("wss://edge-chat.facebook.com/chat", options);
+    reconnectPeriod: 5000,
+    connectTimeout: 30 * 1000,
+  });
 
   mqttClient.on("connect", () => {
     console.log("✅ Connected to Facebook MQTT server");
@@ -56,19 +48,18 @@ function listenMqtt(client, callback) {
 
   mqttClient.on("error", (err) => {
     console.error("❌ MQTT error:", err.message || err);
-    console.log("⏳ Reconnecting in 10s...");
-    setTimeout(() => {
-      listenMqtt(client, callback);
-    }, 10000);
   });
 
   mqttClient.on("close", () => {
-    console.warn("⚠️ MQTT connection closed. Retrying...");
+    console.warn("⚠️ MQTT connection closed, reconnecting...");
   });
 
   return mqttClient;
 }
 
+// ------------------------------
+// SAFE getSeqID
+// ------------------------------
 function getSeqID(message) {
   try {
     if (!message || typeof message !== "object") {
@@ -77,7 +68,7 @@ function getSeqID(message) {
     }
     if (!message.seqId) {
       console.warn("⚠️ getSeqID: seqId missing, using fallback 0");
-      return 0;
+      return 0; // fallback
     }
     return message.seqId;
   } catch (err) {
@@ -87,12 +78,10 @@ function getSeqID(message) {
 }
 
 module.exports = listenMqtt;
-// ================= End Patch =================
 `;
+// ============================
+// PATCHED CODE END
+// ============================
 
-try {
-  fs.writeFileSync(targetFile, patchedCode, "utf8");
-  console.log("✅ Patched listenMqtt.js applied successfully!");
-} catch (err) {
-  console.error("❌ Failed to patch listenMqtt.js:", err);
-}
+fs.writeFileSync(targetFile, patchedCode, "utf8");
+console.log("✅ listenMqtt.js patched successfully!");
