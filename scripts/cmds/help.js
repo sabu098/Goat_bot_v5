@@ -1,7 +1,7 @@
 const { getPrefix } = global.utils;
 const { commands, aliases } = global.GoatBot;
 
-// Rotate images for stylish effect
+// Rotate images 
 let imageIndex = 0;
 const images = [
 "https://files.catbox.moe/m77sfn.gif",
@@ -37,7 +37,7 @@ module.exports = {
 config: {
 name: "help",
 version: "1.0",
-author: "Az ad 💥",
+author: "Az ad 💥", //author change korle tor marechudi 
 countDown: 5,
 role: 0,
 shortDescription: { en: "Show all commands (Stylish SMS Style)" },
