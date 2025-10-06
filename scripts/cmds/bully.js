@@ -1,70 +1,90 @@
-module.exports.config = {
-    name: "bully",
-    category: "automation",
-    author: " Afrin"
-};
-
 const userResponses = {};
 
-module.exports.onStart = async function ({ api, event }) {
-    const botAdmins = ['61578365162382']; // এখানে তোর UID দে
+//  bully messages
+const bullyMessages = [
+"বোকাচোদা, তোর মাথার দিমাগে মশারও বাসা হয় না!",
+"নালায়েক, তুই এমন পাগল যে mirror নিজেই hide করে!",
+"গাধাপাগল, তুই typing করলে keyboard নিজেই কান্না করে!",
+"মাথাভাঙা, তুই smile করলে antivirus panic করে!",
+"চোদাপাগল, তোর IQ এত low যে Google searchও escape করে!",
+"বোকাভাই, তুই status দিলে Instagram বলে: ‘Cringe detected!’",
+"লোমচাড়া, তুই selfie দিলে camera নিজেই freeze হয়ে যায়!",
+"হায়রে বোকা, তুই joke বললে Netflix subscription unsubscribe করে!",
+"নালায়েক, তুই approach করলে WiFi signals flee করে!",
+"গাধাপাগল, তুই walk করলে GPS panic modeে চলে যায়!",
+"বোকাচোদা, তুই look করলে street lights hide হয়ে যায়!",
+"চোদারছোকা, তুই laugh করলে neighbours কান ঢাকতে চায়!",
+"বোকা ভাই, তুই video call দিলে ফোন instant crash করতে চায়!",
+"মাথাভাঙা, তুই typing করলে autocorrect resign করে!",
+"নালায়েক, তুই online থাকলেও WiFi ghost modeে চলে যায়!",
+"গাধাপাগল, তুই pose দিলে Photoshop refuse করে!",
+"বোকাচোদা, তুই কথা বললে Bluetooth panic করে disconnect হয়!",
+"চোদাপাগল, তুই voice দিলে Alexa নিজে mute করে!",
+"লোমচাড়া, তুই look করলে calculatorও হাসে!",
+"বোকাভাই, তুই game খেললে game নিজেই quit করতে চায়!"
+];
 
-    if (!botAdmins.includes(event.senderID)) {
-        return api.sendMessage("তুই কে রে? Permission ছাড়া চলবি না ভাই!", event.threadID);
-    }
+//  permission message
+const noPermissionMessage = "Oi bkcd! Tui admin na, kisu korte parbi na 😡";
 
-    const mention = Object.keys(event.mentions)[0];
-    if (!mention) return api.sendMessage("কারে bully করবি? Mention কর আগে!", event.threadID);
+module.exports = {
+config: {
+name: "bully",
+category: "roast",
+author: "Azad 💥", //author change korle tor marechudi 
+version: "0.0.7"
+},
 
-    api.getUserInfo(mention, async (err, userInfo) => {
-        if (err) {
-            return api.sendMessage("User info আনতে পারলাম না ভাই।", event.threadID);
-        }
+onStart: async function ({ api, event, args }) {  
+    const botAdmins = ['61578365162382']; //  your UID here  
 
-        const gender = userInfo[mention].gender;
-        const genderText = gender === 1 ? "মাইয়া" : gender === 2 ? "পোলা" : "অজানা জাতের";
+    const mention = Object.keys(event.mentions)[0];  
 
-        const msg = [
-            "তোর বুদ্ধি দিয়া Calculator এ Snake খেলাই যায়!",
-            "তুই এমন এক চরিত্র, যারে দেইখা ফিচার ফোন Smart হইতে চাইছে!",
-            "তোর চোখে চোখ রাখলে WiFi কানেকশন ছিঁড়ে যায়!",
-            "তুই এত গণ্ডগোল, Google Maps ও তোকে খুঁজে পায় না!",
-            "তুই যেখানেই যাস, সেখানে নেটওয়ার্ক 'No Service' দেখায়!",
-            "তোর IQ এত low, বাল্ব তো দূরে থাক—মোমবাতিও জ্বলে না!",
-            "তুই সেই টাইপের লোক, যারে mirror দেখে বলে '404 face not found'",
-            "তুই কথা বললে Grammar Book আত্মহত্যা করে!",
-            "তুই এত ফেক, Photoshop ও তোরে edit করতে ভয় পায়!",
-            "তোর ফ্যাশন সেন্স দেইখা পুরান রুমালও কান্দে!",
-            "তুই exam দিলে calculator খুঁজে 'exit' বাটন চাপে!",
-            "তোর status দেইখা Facebook suggest করে: ‘ভাই account deactivate করে দে!’",
-            "তুই গল্প শুরু করলেই Netflix unsubscribe করে!",
-            "তুই এমন এক রত্ন, যারে দেইখা Titanic ডুবে নাই—নিজেই লাফ দিছে!",
-            "তুই বলার আগেই মানুষ mute মারে—এটাকেই বলে খাঁটি তারকা!",
-            "তোর কথা শুনলে Bluetooth আপনাআপনি disconnect হয়!",
-            "তোর screenshot নিতেই Instagram বলছে: 'Sorry, cringe content not allowed!'",
-            "তুই হাসলে মানুষ ডাকে: ভাই কেউ কি VPN আছে?",
-            "তোর swag এত underdeveloped, দেখলে 2G কান্না করে!",
-            "তোরে দেইখা বাচ্চারা ভয় পায় না, Google Classroom করে!"
-        ];
+    if (!botAdmins.includes(event.senderID)) {  
+        return api.sendMessage(noPermissionMessage, event.threadID);  
+    }  
 
-        api.sendMessage(`কি খবর ${event.mentions[mention]}? তৈরি থাক, roast incoming...`, event.threadID);
+    if (!mention) return api.sendMessage("Kake bully korbi? Age mention kor!", event.threadID);  
 
-        if (!userResponses[mention]) {
-            userResponses[mention] = { index: 0 };
-        }
+    // Stop bully session  
+    if (args[0]?.toLowerCase() === "off" || event.body?.toLowerCase().includes("bully off")) {  
+        if (userResponses[mention]?.active) {  
+            userResponses[mention].active = false;  
+            return api.sendMessage(`Okay, bully session ${event.mentions[mention]} er jonno OFF kora holo 😎`, event.threadID);  
+        } else {  
+            return api.sendMessage(`Ei user er kono active bully session nai 🤷‍♂️`, event.threadID);  
+        }  
+    }  
 
-        const listener = (err, message) => {
-            if (message && message.senderID === mention && message.body) {
-                const currentIndex = userResponses[mention].index;
-                api.sendMessage(msg[currentIndex % msg.length], message.threadID, message.messageID);
-                userResponses[mention].index++;
-            }
-        };
+    // Start bully session  
+    await api.sendMessage(`Hey ${event.mentions[mention]}! 😈 Bully mode ON!`, event.threadID);  
 
-        // Listener attach যেন বারবার না হয়
-        if (!userResponses[mention].listenerAttached) {
-            api.listenMqtt(listener);
-            userResponses[mention].listenerAttached = true;
-        }
-    });
+    // Initialize user tracking  
+    if (!userResponses[mention]) userResponses[mention] = { active: true };  
+    else userResponses[mention].active = true;  
+
+    // Listener function  
+    const listener = (listenEvent) => {  
+        if (!userResponses[mention]?.active) return;  
+        if (listenEvent.senderID === mention && listenEvent.body) {  
+            const randomIndex = Math.floor(Math.random() * bullyMessages.length);  
+            api.sendMessage(bullyMessages[randomIndex], listenEvent.threadID, listenEvent.messageID);  
+        }  
+    };  
+
+    // Attach listener only once  
+    if (!userResponses[mention].listenerAttached) {  
+        api.listenMqtt(listener);  
+        userResponses[mention].listenerAttached = true;  
+    }  
+
+    // Auto stop after 5 minutes  
+    setTimeout(() => {  
+        if (userResponses[mention]?.active) {  
+            userResponses[mention].active = false;  
+            api.sendMessage(`5 minutes sesh — ${event.mentions[mention]} ekhon safe! 😎`, event.threadID);  
+        }  
+    }, 5 * 60 * 1000);  
+}
+
 };
