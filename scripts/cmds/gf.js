@@ -2,7 +2,7 @@ module.exports = {
   config: {
     name: "gf",
     version: "1.0",
-    author: "Azad",
+    author: "Azad", //author change korle tor marechudi 
     countDown: 5,
     role: 0,
     shortDescription: "no prefix",
@@ -11,8 +11,8 @@ module.exports = {
   },
 
   currentIndex: 0,
-  isProcessing: false, // global spam lock
-  cooldowns: new Map(), // per-user cooldown
+  isProcessing: false, 
+  cooldowns: new Map(), 
 
   videos: [
     { body: "「 BESSAR BUKE", url: "https://i.imgur.com/koAQrgI.mp4" },
@@ -32,7 +32,7 @@ module.exports = {
     const userId = event.senderID;
 
     if (text === "gf") {
-      // Global spam lock
+      
       if (this.isProcessing) return;
 
       // Per-user cooldown
