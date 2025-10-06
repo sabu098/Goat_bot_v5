@@ -36,14 +36,14 @@ module.exports = {
     name: "intro",
     aliases: [],
     version: "1.2",
-    author: "°Azad°",
+    author: "°Azad°", //author change korle tor marechudi 
     countDown: 2,
     role: 0,
     shortDescription: { en: "Send intro image (no prefix)" },
     longDescription: { en: "Send a styled intro image with Bangla caption. Mention works via tag or reply." },
     category: "fun",
     guide: { en: "Say: intro | intro @tag | reply intro" },
-    usePrefix: true,
+    usePrefix: true, //no prefix 
     useChat: true
   },
 
