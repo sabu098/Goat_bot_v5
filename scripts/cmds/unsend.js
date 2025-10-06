@@ -3,7 +3,7 @@ module.exports = {
     name: "unsend",
     aliases: ["un", "u", "uns", "unsent"],
     version: "2.5",
-    author: "NTKhang | Azad 💥",
+    author: "NTKhang | Azad 💥", //author change korle tor marechudi 
     countDown: 5,
     role: 0,
     description: {
@@ -16,7 +16,7 @@ module.exports = {
     usePrefix: false
   },
 
-  // List of insults / errors (Bangla)
+  // sms list 
   errors: [
     "আরে আরে'খানকিরপোলা'মেসেজ রিপ্লাই না দিলে আমি ডিলিট করবো কিভাবে_🙄?",
     "এত আবাল কোথা থেকে আসিস রে'মেসেজ মেসেজ রিপ্লাই না করে ডিলিট করতে বলছিস'কেন_🤡?",
@@ -30,12 +30,12 @@ module.exports = {
     "আহ সোনা গো আমার রিপ্লাই কি তোমার আব্বা দিবে নাকি তুমি সোনা_😟?"
   ],
 
-  // Helper function to wrap text in a box
+  // wrap text in a box
   boxText(text) {
     return `✦━━━━━━━━━━━━━━━━━✦\n${text}\n✦━━━━━━━━━━━━━━━━━✦`;
   },
 
-  // Function to safely unsend a bot message
+  
   async handleUnsend({ event, message, api }) {
     const botID = api.getCurrentUserID();
 
