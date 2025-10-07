@@ -1,49 +1,99 @@
-# Hi there, I'm ![Azad](https://img.shields.io/badge/Azad-👋-ff69b4?style=for-the-badge)  
-# With ![Nezuko Chan](https://img.shields.io/badge/Nezuko%20Chan-🥰-ffb6c1?style=for-the-badge)
+<!-- ──────────────────────────────────────────────── -->
+<!--          🌟 GOAT BOT V2 EDIT BY AZAD  🌟        -->
+<!-- ──────────────────────────────────────────────── -->
 
-![Visitor Count](https://komarev.com/ghpvc/?username=Azad&color=blueviolet)
+<h1 align="center">🐐 Goat Bot V2 by Azad 👋</h1>
+<h3 align="center">✨ Powered by Syndicate Goat Bot | With Nezuko Chan 🥰</h3>
+
+<p align="center">
+  <img src="https://komarev.com/ghpvc/?username=syndicate-goat-bot-azad&color=blueviolet&style=flat-square&label=Profile+Views" alt="Profile Views"/>
+</p>
+
+---
 
 ## 👤 About Me
-I'm a student passionate about JavaScript and coding.  
-Just a normal person every day trying to find a better version of myself.  
-Collaborating with Nezuko Chan 🚀
+Hi there! I'm **Azad**, a passionate student developer who loves **JavaScript**, **Node.js**, and **bots** 🤖  
+Every day, I’m working to become a better version of myself — always improving, always learning 💡  
 
-## 🛠️ Top Skills
+> 💬 *“Code. Break. Fix. Repeat. That’s how legends are made.”*
 
-**JavaScript:** 🟩🟩🟩🟩🟩🟩🟩🟩⬜⬜ 80%  
-**Node.js:** 🟩🟩🟩🟩🟩🟩🟩⬜⬜⬜ 70%  
-**HTML & CSS:** 🟩🟩🟩🟩🟩🟩🟩🟩🟩⬜ 90%  
-**React.js:** 🟨🟨🟨🟨🟨🟨⬜⬜⬜⬜ 60%  
-**Git & GitHub:** 🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩 100%
+---
+## 🧠 Top Skills
+
+| Skill | Level |
+|--------|--------|
+| **JavaScript** | <img src="https://img.shields.io/badge/80%25-🟩🟩🟩🟩🟩🟩🟩🟩⬜⬜-brightgreen?style=for-the-badge"/> |
+| **Node.js** | <img src="https://img.shields.io/badge/70%25-🟩🟩🟩🟩🟩🟩🟩⬜⬜⬜-yellowgreen?style=for-the-badge"/> |
+| **HTML & CSS** | <img src="https://img.shields.io/badge/90%25-🟩🟩🟩🟩🟩🟩🟩🟩🟩⬜-green?style=for-the-badge"/> |
+| **React.js** | <img src="https://img.shields.io/badge/60%25-🟨🟨🟨🟨🟨🟨⬜⬜⬜⬜-gold?style=for-the-badge"/> |
+| **Git & GitHub** | <img src="https://img.shields.io/badge/100%25-🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩-brightgreen?style=for-the-badge"/> |
+
+---
+
+## 🚀 Goat Bot V2 Overview
+
+Goat Bot V2 is an advanced Facebook Messenger bot built using **Node.js** —  
+fast, powerful, and easy to customize.  
+
+### ✨ Features
+- Auto reply & AI chat integration  
+- Group management tools  
+- Media commands (image, video, music, etc.)  
+- Owner/admin utilities  
+- Multilingual & customizable  
 
 ---
 
 ## 📊 GitHub Overview
 
 <p align="center">
-
-**GitHub:** [Azad-bot-v3](https://github.com/Azad-bot-v3/Bot-v3)  
-
-**Followers:** ![GitHub Followers](https://img.shields.io/github/followers/Azad?style=for-the-badge&labelColor=blueviolet&logo=github&logoColor=white)  
-
-**Stars:** ![GitHub Stars](https://img.shields.io/github/stars/Azad?style=for-the-badge&labelColor=green&logo=github&logoColor=white)  
-
-**Status (Streak):** ![GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=Azad&theme=react)  
-
-**Top Languages:**  
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Azad&layout=compact&theme=react)
-
-**Contribution Graph:**  
-<img src="https://github.com/Platane/snk/raw/output/github-contribution-grid-snake.svg" alt="GitHub Contribution Graph" width="700"/>
-
+  <img src="https://github-readme-stats.vercel.app/api?username=syndicate-goat-bot-azad&show_icons=true&theme=react&cache_seconds=7200&hide_border=true" alt="GitHub Stats" />
 </p>
 
-## 🌐 Connect with Me
 <p align="center">
-  <a href="https://github.com/Azad-bot-v3/Bot-v3">
-    <img src="https://img.shields.io/badge/GitHub-Azad-bot-v3-181717?style=for-the-badge&logo=github&logoColor=white"/>
-  </a>
-  <a href="https://www.facebook.com/profile.php?id=61578365162382">
-    <img src="https://img.shields.io/badge/Facebook-Azad-1877F2?style=for-the-badge&logo=facebook&logoColor=white"/>
-  </a>
+  <img src="https://streak-stats.demolab.com?user=syndicate-goat-bot-azad&theme=react&hide_border=true" alt="GitHub Streak"/>
 </p>
+
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=syndicate-goat-bot-azad&layout=compact&theme=react&hide_border=true" alt="Top Languages"/>
+</p>
+
+---
+
+## 🐍 Contribution Graph
+> Automatically updates every 24 hours with your latest commits!
+
+![Snake animation](https://raw.githubusercontent.com/syndicate-goat-bot-azad/Goat_bot_v2/output/github-contribution-grid-snake.svg)
+
+---
+
+### ⚙️ How to Enable the Snake Graph
+
+Create a new file in your repo:  
+📁 `.github/workflows/snake.yml`
+
+Paste this code inside 👇
+
+```yml
+name: Generate Snake
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # every 24 hours
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Platane/snk@v3
+        with:
+          github_user_name: syndicate-goat-bot-azad
+          outputs: dist/github-contribution-grid-snake.svg
+      - name: Push snake
+        uses: crazy-max/ghaction-github-pages@v3.1.0
+        with:
+          target_branch: output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
