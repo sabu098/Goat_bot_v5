@@ -6,6 +6,10 @@
 <h3 align="center">✨ Powered by Syndicate Goat Bot | With Nezuko Chan 🥰</h3>
 
 <p align="center">
+  <img src="https://files.catbox.moe/i9etjw.gif" width="400" alt="Nezuko GIF"/>
+</p>
+
+<p align="center">
   <img src="https://komarev.com/ghpvc/?username=syndicate-goat-bot-azad&color=blueviolet&style=flat-square&label=Profile+Views" alt="Profile Views"/>
 </p>
 
@@ -18,36 +22,38 @@ Every day, I’m working to become a better version of myself — always improvi
 > 💬 *“Code. Break. Fix. Repeat. That’s how legends are made.”*
 
 ---
+
 ## 🧠 Top Skills
 
 | Skill | Level |
 |--------|--------|
-| **JavaScript** | <img src="https://img.shields.io/badge/80%25-🟩🟩🟩🟩🟩🟩🟩🟩⬜⬜-brightgreen?style=for-the-badge"/> |
-| **Node.js** | <img src="https://img.shields.io/badge/70%25-🟩🟩🟩🟩🟩🟩🟩⬜⬜⬜-yellowgreen?style=for-the-badge"/> |
-| **HTML & CSS** | <img src="https://img.shields.io/badge/90%25-🟩🟩🟩🟩🟩🟩🟩🟩🟩⬜-green?style=for-the-badge"/> |
-| **React.js** | <img src="https://img.shields.io/badge/60%25-🟨🟨🟨🟨🟨🟨⬜⬜⬜⬜-gold?style=for-the-badge"/> |
-| **Git & GitHub** | <img src="https://img.shields.io/badge/100%25-🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩-brightgreen?style=for-the-badge"/> |
+| **JavaScript** | ![80%](https://img.shields.io/badge/80%25-🟩🟩🟩🟩🟩🟩🟩🟩⬜⬜-brightgreen?style=for-the-badge) |
+| **Node.js** | ![70%](https://img.shields.io/badge/70%25-🟩🟩🟩🟩🟩🟩🟩⬜⬜⬜-yellowgreen?style=for-the-badge) |
+| **HTML & CSS** | ![90%](https://img.shields.io/badge/90%25-🟩🟩🟩🟩🟩🟩🟩🟩🟩⬜-green?style=for-the-badge) |
+| **React.js** | ![60%](https://img.shields.io/badge/60%25-🟨🟨🟨🟨🟨🟨⬜⬜⬜⬜-gold?style=for-the-badge) |
+| **Git & GitHub** | ![100%](https://img.shields.io/badge/100%25-🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩-brightgreen?style=for-the-badge) |
 
 ---
 
 ## 🚀 Goat Bot V2 Overview
 
-Goat Bot V2 is an advanced Facebook Messenger bot built using **Node.js** —  
-fast, powerful, and easy to customize.  
+**Goat Bot V2** is an advanced Facebook Messenger bot built with **Node.js** —  
+fast, powerful, and fully customizable 💥  
 
 ### ✨ Features
-- Auto reply & AI chat integration  
-- Group management tools  
-- Media commands (image, video, music, etc.)  
-- Owner/admin utilities  
-- Multilingual & customizable  
+- 🤖 AI auto-reply system  
+- 🧩 Modular command structure  
+- 🛠️ Admin & group management tools  
+- 🎵 Media support (music, video, etc.)  
+- 🌍 Multi-language support  
+- 💾 Persistent user data  
 
 ---
 
 ## 📊 GitHub Overview
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=syndicate-goat-bot-azad&show_icons=true&theme=react&cache_seconds=7200&hide_border=true" alt="GitHub Stats" />
+  <img src="https://github-readme-stats.vercel.app/api?username=syndicate-goat-bot-azad&show_icons=true&theme=react&cache_seconds=7200&hide_border=true" alt="GitHub Stats"/>
 </p>
 
 <p align="center">
@@ -60,40 +66,17 @@ fast, powerful, and easy to customize.
 
 ---
 
-## 🐍 Contribution Graph
-> Automatically updates every 24 hours with your latest commits!
 
-![Snake animation](https://raw.githubusercontent.com/syndicate-goat-bot-azad/Goat_bot_v2/output/github-contribution-grid-snake.svg)
+> 🕒 *Auto-updates every 24/7 hours with your latest commits!*
 
 ---
 
-### ⚙️ How to Enable the Snake Graph
+### 💖 Support
+If you like this project, don’t forget to ⭐ **star the repo** and follow me for more awesome bot projects!
 
-Create a new file in your repo:  
-📁 `.github/workflows/snake.yml`
+---
 
-Paste this code inside 👇
-
-```yml
-name: Generate Snake
-
-on:
-  schedule:
-    - cron: "0 0 * * *" # every 24 hours
-  workflow_dispatch:
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: Platane/snk@v3
-        with:
-          github_user_name: syndicate-goat-bot-azad
-          outputs: dist/github-contribution-grid-snake.svg
-      - name: Push snake
-        uses: crazy-max/ghaction-github-pages@v3.1.0
-        with:
-          target_branch: output
-          build_dir: dist
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+### 📬 Connect with Me
+- 📧 **Email:** [yourmail@example.com](mailto:yourazad@example.com)  
+- 💬 **Facebook:** [Azad on Facebook](https://www.facebook.com/profile.php?id=61578365162382)  
+- 🧠 **Discord:** `azad09788`
